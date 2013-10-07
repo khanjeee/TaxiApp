@@ -385,7 +385,7 @@
     <div class="grid_12 header-repeat">
         <div id="branding">
             <div class="floatleft">
-                <img src="<?php echo site_url('/img/kmdc_logo.png')?>" alt="Logo" /></div>
+                <img src="" alt="Logo" /></div>
             <div class="floatright">
                 <div class="floatleft">
                     <img src="<?php echo site_url('/img/img-profile.jpg')?>" alt="Profile Pic" /></div>
@@ -409,29 +409,9 @@
     </div>
     <div class="grid_12">
         <ul class="nav main">
-            <li class="ic-dashboard"><a href="<?php echo site_url('admin/dashboard') ?>"><span>Dashboard</span></a> </li>
-            <li class="ic-charts"><a href="<?php echo site_url('admin/courses/view') ?>"><span>Courses</span></a>
-				<ul>
-                    <li><a href="<?php echo site_url('admin/assign_course/view') ?>"><span>Assign Course</span></a></li>
-                </ul>
-			</li>
-            <li class="ic-grid-tables"><a href="<?php echo site_url('admin/notifications/view') ?>"><span>Notification Board</span></a></li>
-            <li class="ic-gallery dd"><a href="<?php echo site_url('admin/user_management') ?>"><span>User Management</span></a>
-				<ul>
-                    <li><a href="<?php echo site_url('admin/students/view') ?>"><span>Students</span></a></li>
-                    <li><a href="<?php echo site_url('admin/teachers/view') ?>"><span>Teacher</span></a></li>
-                </ul>
-			</li>
-            <li class="ic-gallery dd"><a href="<?php echo site_url('admin/departments/view') ?>"><span>Departments</span></a></li>
-            <li class="ic-gallery dd"><a href="<?php echo site_url('admin/course_lectures/view') ?>"><span>Lectures</span></a>
-                <ul>
-                    <li ><a href="<?php echo site_url('admin/course_assignments/view') ?>"><span>Assignment</span></a></li>
-                    <li ><a href="<?php echo site_url('admin/questions/topic_select') ?>"><span>Assessment</span></a></li>
-                </ul>
-            </li>
-            <li class="ic-gallery dd"><a href="<?php echo site_url('admin/schedule/view') ?>"><span>Schedule</span></a></li>
-            <li class="ic-gallery dd"><a href="<?php echo site_url('admin/promote_students/select') ?>"><span>Promote</span></a></li>
-            <li class="ic-gallery dd"><a href="<?php echo site_url('admin/attendance') ?>"><span>Attendance</span></a></li>
+            <li class="ic-gallery dd"><a href="<?php echo site_url('admin//users/view') ?>"><span>Users</span></a></li>
+            <li class="ic-gallery dd"><a href="<?php echo site_url('admin/driver_information/view') ?>"><span>Driver</span></a></li>
+            <li class="ic-gallery dd"><a href="<?php echo site_url('admin/corporate/view') ?>"><span>Corporate</span></a></li>
 		    </ul>
     </div>
     <div class="clear">

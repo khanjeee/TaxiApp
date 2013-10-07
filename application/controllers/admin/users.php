@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Courses extends CI_Controller {
+class Users extends CI_Controller {
 
 	function __construct()
 	{   
@@ -12,26 +12,13 @@ class Courses extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->helper('form');
 		$this->load->library('grocery_CRUD');
-		$this->load->library('ion_auth');
-		$this->load->model('Sections_Model','sections');
-		$this->load->model('Departments_Model','departments');
-		$this->load->model('Years_Model','years');
-		$this->load->model('Courses_Model','courses');
 		$this->load->helper('common_helper');
+		$this->load->model('Groups_Model','groups');
 		
 		
 		
 		
-		if (!$this->ion_auth->logged_in())
-		{
-			ci_redirect('authenticate/login');
-		}
 		
-		if (!$this->ion_auth->is_admin())
-		{
-			$this->session->set_flashdata('message', 'You must be an admin to view this page');
-			ci_redirect('');
-		}
 		
 	}
 
@@ -57,43 +44,45 @@ class Courses extends CI_Controller {
 			$crud = new grocery_CRUD();
 
 			$crud->set_theme('flexigrid');
-			$crud->set_table('courses');
-			$crud->set_subject('Courses');
-			$crud->required_fields('code','name','description');
+			$crud->set_table('users');
+			$crud->set_subject('Users Info');
+			//$crud->required_fields('code','name','description');
 			
-			$crud->columns('code','name','department_id','description','status','section_id','year_id');
+			$crud->columns('first_name','last_name','username','gender','phone','user_image','user_id','group_id','status','dispatcher_id');
 			
-			/*Generating dropdwons for year section and course status*/
+			/*Generating dropdwons for year section and course status
 			$crud->callback_add_field('status',array($this,'status_dropdown'));
 			$crud->callback_add_field('section_id',array($this->sections,'get_sections_dropdown'));
 			$crud->callback_add_field('year_id',array($this->years,'get_years_dropdown'));
-			$crud->callback_add_field('department_id',array($this->departments,'get_departments_dropdown'));
 			
+			*/
+			$crud->callback_add_field('group_id',array($this->groups,'get_groups_dropdown'));
+			$crud->callback_edit_field('group_id',array($this->groups,'get_groups_dropdown'));
 			
-			
-			/*call back for edit form->passes value attribute with items value to the function*/
+			/*call back for edit form->passes value attribute with items value to the function
 			$crud->callback_edit_field('status',array($this,'status_dropdown'));
 			$crud->callback_edit_field('section_id',array($this->sections,'get_sections_dropdown'));
 			$crud->callback_edit_field('year_id',array($this->years,'get_years_dropdown'));
 			$crud->callback_edit_field('department_id',array($this->departments,'get_departments_dropdown'));
-			
+			*/
 			//insertion of created_by not present in form
-			$crud->callback_before_insert(array($this,'call_before_insert'));
+			//$crud->callback_before_insert(array($this,'call_before_insert'));
 
-			/*callback for table view */
+			/*callback for table view 
 			$crud->callback_column('status',array($this,'_status'));
 			$crud->callback_column('section_id',array($this->sections,'get_section_by_id'));
 			$crud->callback_column('year_id',array($this->years,'get_year_by_id'));
 			$crud->callback_column('department_id',array($this->departments,'get_department_by_id'));
-		
+		*/
 			
 			/*used to display fields when adding items*/
-			$crud->fields('code','name','department_id','description','status','section_id','year_id','created_by');
-			
+			//$crud->fields('code','name','department_id','description','status','section_id','year_id','created_by');
+			$crud->fields('first_name','last_name','username','gender','phone','user_image','group_id','status','dispatcher_id');
+				
 			/*hidding a field for insertion via call_before_insert crud requires field to be present in Crud->fields*/
-			$crud->change_field_type('created_by','invisible');
+		//	$crud->change_field_type('created_by','invisible');
 			
-			/*used to change names of the fields*/
+			/*used to change names of the fields
 			$crud->display_as('description','Description');
 			$crud->display_as('name','Name');
 			$crud->display_as('status','Status');
@@ -101,14 +90,14 @@ class Courses extends CI_Controller {
 			$crud->display_as('year_id','Year');
 			$crud->display_as('department_id','Department');
 			
-			
+			*/
 			//$this->pr($crud); 
 			//die;
 			$output = $crud->render();
 			//$this->pr($output);
 
 
-            $content = $this->load->view('admin/courses.php',$output,true);
+            $content = $this->load->view('admin/users.php',$output,true);
             // Pass to the master view
             $this->load->view('admin/master', array('content' => $content));
 
