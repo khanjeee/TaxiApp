@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>KMDC Student Portal</title>
+    <title>Taxi App</title>
 <script src="<?php echo asset_js('jquery1.7-min.js');?>" type="text/javascript"></script>
 <script src="<?php echo asset_js('jquery-ui.js');?>" type="text/javascript"></script>
 
@@ -26,7 +26,7 @@
 </div>
 <div class="logo-bar">
 <div class="wrapper">
-<div class="logo"><a href="<?php echo base_url();?>"><img src="<?php echo asset_img("kmdc_logo.png");?>" alt="cymango" border="0" /></a></div>
+<div class="logo"><a href="<?php echo base_url();?>"><img src=""  border="0" /></a></div>
 
 <!--<div class="top-ad"><img src="<?php echo asset_img("top-banner.jpg");?>" alt="Top Banner" /></div>-->
 </div>

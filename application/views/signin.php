@@ -1,6 +1,6 @@
 <div class="content">
     <div class="wrapper">
-        <div class="signin-page">
+        <div class="signin-pagee">
             <?php
             if($message != "")
             {
@@ -25,11 +25,11 @@
                 <div id="signin_error" style="clear:both; color:red;"></div>
                 <div class="signin-sep"></div>
             </div>
-            <div class="signin-page-txt">
+            <!--  <div class="signin-page-txt">
                 <h1><span style="color:white;font-size: 29px">Learn</span><span style="color:black"> anywhere </span><?php //echo ($header['total_users'] * 1234);?></h1>
                 <h2>"Stay Connected Everywhere..." </h2>
                 <h2><span style="color:white">LMS</span> <span style="color:black">Student Portal</span> </h2>
-            </div>
+            </div>-->
         </div>
 
 

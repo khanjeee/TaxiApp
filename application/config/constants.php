@@ -35,9 +35,9 @@ define('FOPEN_WRITE_CREATE',					'ab');
 define('FOPEN_READ_WRITE_CREATE',				'a+b');
 define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
-define('UPLOAD_LECTURES_FILE',		'assets/uploads/lectures/file');
-define('UPLOAD_LECTURES_AUDIO',		'assets/uploads/lectures/audio');
-define('UPLOAD_ASSIGNMENT_FILE',		'assets/uploads/assignments/file');
+define('UPLOAD_USER_IMAGE',		'assets/uploads/images/users');
+define('SALT','Cakephpframework');
+define('CURRENCY_UNIT',		'$');
 define('UPLOAD_ASSIGNMENT_AUDIO',		'assets/uploads/assignments/audio');
 
 

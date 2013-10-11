@@ -1,14 +1,15 @@
 <?php
-class Students_course extends grocery_CRUD_Model
+class Customer_report extends grocery_CRUD_Model
 {
 //The function get_list is just a copy-paste from grocery_CRUD_Model
 	function get_list()
 	{
-		//$this->pr($_POST); die;
+		$user_id=(isset($_POST['user_id']))? $_POST['user_id'] : 0;	
+		//print_r($_POST); die;
 	 if($this->table_name === null)
 	  return false;
 	
-	 $select = "{$this->table_name}.*";
+	 $select = "{$this->table_name}.*,payment.*,journey_users.*,driver_information.name as 'driver_name'";
 	
   // ADD YOUR SELECT FROM JOIN HERE, for example: <------------------------------------------------------
   // $select .= ", user_log.created_date, user_log.update_date";
@@ -33,11 +34,12 @@ class Students_course extends grocery_CRUD_Model
 	
   // ADD YOUR JOIN HERE for example: <------------------------------------------------------
  //  $this->db->join('user_log','user_log.user_id = users.id');
-   $this->db->join('student_course','student_course.student_id = '. $this->table_name . '.id');
-   $this->db->join('assign_course','assign_course.id = student_course.assign_course_id');
-   $this->db->where('student_course.assign_course_id', intval($this->uri->segment(4)));
-   $this->db->where('assign_course.batch_year', intval($this->uri->segment(5)));
-   $this->db->where('assign_course.section_id', intval($this->uri->segment(6)));
+   $this->db->join('payment','payment.customer_id = '. $this->table_name . '.id');
+   $this->db->join('journey_users','journey_users.journey_id = payment.journey_id');
+   $this->db->join('journeys','journeys.id = journey_users.journey_id');
+   $this->db->join('driver_information','driver_information.cab_id = journeys.cab_id');
+   $this->db->where('payment.customer_id',$user_id);
+   
     
 	 $results = $this->db->get($this->table_name)->result();
 	

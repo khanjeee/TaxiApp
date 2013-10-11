@@ -24,7 +24,7 @@ class Users_Model  extends CI_Model  {
 			$arrUsers[$data->id]=$data->first_name;
 		}
 		
-		return form_dropdown('user_id', $arrUsers,$value);
+		return form_dropdown('user_id', $arrUsers,$value,'id="user_id"');
     }
     
     //returns first_name of the uid passed
@@ -41,6 +41,20 @@ class Users_Model  extends CI_Model  {
     function get_user_id() {
     	return $this->ion_auth->user()->row()->id;
     
+    }
+    
+    function get_corporate_users($corporate_id)
+    {
+    	 
+    	$this->db->select('id,first_name');
+    	$query=$this->db->get_where('users', array('corporate_id' => $corporate_id));
+    	$result=$query->result();
+    
+    	if(!empty($result)){
+    		 
+    		return json_encode($result);
+    		 
+    	}
     }
     
     

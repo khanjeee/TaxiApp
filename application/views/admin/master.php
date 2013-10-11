@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>KMDC Student Portal Admin</title>
+    <title>Taxi App Admin Panel</title>
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('css/reset.css')?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('/css/text.css')?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('/css/grid.css')?>" media="screen" />
@@ -412,7 +412,15 @@
             <li class="ic-gallery dd"><a href="<?php echo site_url('admin//users/view') ?>"><span>Users</span></a></li>
             <li class="ic-gallery dd"><a href="<?php echo site_url('admin/driver_information/view') ?>"><span>Driver</span></a></li>
             <li class="ic-gallery dd"><a href="<?php echo site_url('admin/corporate/view') ?>"><span>Corporate</span></a></li>
-		    </ul>
+            <li class="ic-gallery dd"><a href="#"><span>Reports</span></a>
+            	<ul>
+                    <li ><a href="<?php echo site_url('admin/report/select_customer') ?>"><span>Customer</span></a></li>
+                    <li ><a href="#"><span>Corporate</span></a></li>
+                </ul>
+            
+            </li>
+            
+		</ul>
     </div>
     <div class="clear">
     </div>
@@ -430,7 +438,7 @@
 </div>
 <div id="site_info">
     <p>
-        Copyright <a href="/">KMDC</a>. All Rights Reserved.
+        Copyright <a href="/">Taxi App</a>. All Rights Reserved.
     </p>
 </div>
 </body>
