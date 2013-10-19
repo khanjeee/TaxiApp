@@ -38,7 +38,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 define('UPLOAD_USER_IMAGE',		'assets/uploads/images/users');
 define('SALT','Cakephpframework');
 define('CURRENCY_UNIT',		'$');
-define('UPLOAD_ASSIGNMENT_AUDIO',		'assets/uploads/assignments/audio');
+define('LOGIN_SERVICE_URL',		'http://technyxsystems.com/demo/stax/user/api/verify_login.json');
 
 
 /* End of file constants.php */

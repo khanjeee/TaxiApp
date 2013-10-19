@@ -12,15 +12,20 @@ class Dashboard extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->helper('form');
 		$this->load->library('grocery_CRUD');
-		$this->load->library('ion_auth');
-		$this->load->model('Sections_Model','sections');
-		$this->load->model('Years_Model','years');
-		$this->load->model('Groups_Model','groups');
+		$this->load->library('session');
+		$session_data=$this->session->all_userdata();
+		if(isset($session_data['group_id']) ){
+			($session_data['group_id']==1) ? $this->index() : 	ci_redirect('admin/login');
 		
+		}
+		else{
+			ci_redirect('admin/login');
+		}
 		
+		/*
 		if (!$this->ion_auth->logged_in())
 		{
-			ci_redirect('authenticate/login');
+				$this->load->view('admin/login');
 		}
 		
 		/* if (!$this->ion_auth->is_admin())

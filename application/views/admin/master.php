@@ -393,8 +393,7 @@
                     <ul class="inline-ul floatleft">
                         <li>Hello Admin</li>
                         <li><a href="#">Config</a></li>
-                        <li><a href="<?php echo site_url('forum') ?>"><span>Forum</span></a></li>
-                        <li><a href="<?php echo site_url('authenticate/logout') ?>">Logout</a></li>
+                        <li><a href="<?php echo site_url('admin/logout') ?>">Logout</a></li>
                     </ul>
                     <br />
                     <span class="small grey">Last Login: 3 hours ago</span>

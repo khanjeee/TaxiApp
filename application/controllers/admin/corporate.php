@@ -12,11 +12,25 @@ class Corporate extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->helper('form');
 		$this->load->library('grocery_CRUD');
-		$this->load->library('ion_auth');
 		$this->load->helper('common_helper');
 		$this->load->model('Cab_provider_Model','cab_provider');
 		$this->load->model('Corporate_cab_provider_Model','cc_provider');
-
+		
+		$this->load->library('session');
+		$session_data=$this->session->all_userdata(); 
+		if(isset($session_data['group_id']) ){
+			if($session_data['group_id']!=1) { 
+				$this->session->set_flashdata('message', 'You must be an admin to view this page');
+				ci_redirect('admin/login','refresh');
+			} 	
+			
+		
+		}
+		else{
+			$this->session->set_flashdata('message', 'You must login to view this page');
+			ci_redirect('admin/login','refresh');
+			
+		}
 
 
 
@@ -37,13 +51,13 @@ class Corporate extends CI_Controller {
 
 	function view()
 	{
-
+	
 
 
 		try{
 			$crud = new grocery_CRUD();
 
-			$crud->set_theme('flexigrid');
+			$crud->set_theme('datatables');
 			$crud->set_table('corporate');
 			$crud->set_subject('Corporate Info');
 			$crud->required_fields('name','license_no','email','phone_no','address');
