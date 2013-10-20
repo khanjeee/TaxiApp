@@ -61,6 +61,9 @@ class Corporate extends CI_Controller {
 			$crud->set_table('corporate');
 			$crud->set_subject('Corporate Info');
 			$crud->required_fields('name','license_no','email','phone_no','address');
+			
+			$crud->unset_print();
+			$crud->unset_export();
 
 			$crud->columns('name','license_no','email','phone_no','address');
 			/*used to display fields when adding items*/

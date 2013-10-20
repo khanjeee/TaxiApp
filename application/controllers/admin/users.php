@@ -72,6 +72,9 @@ class Users extends CI_Controller {
 			$crud->set_field_upload('user_image',UPLOAD_USER_IMAGE);
 			$crud->field_type('password', 'password');
 			
+			$crud->unset_print();
+			$crud->unset_export();
+			
 			/*Generating dropdwons for year section and course status
 			$crud->callback_add_field('status',array($this,'status_dropdown'));
 			$crud->callback_add_field('section_id',array($this->sections,'get_sections_dropdown'));

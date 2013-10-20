@@ -3,6 +3,7 @@
 class Report extends CI_Controller {
 	
 	public   $payment_count=0;
+	public   $journey_count=0;
 
 	function __construct()
 	{   
@@ -39,70 +40,7 @@ class Report extends CI_Controller {
 		
 	}
 
-	function insert()
-	{
-		
-		$arr=array();
-	
-	try{
-		
-			if(isset($_POST['assign_course_id'])){
-				$assign_course_id=(int)$_POST['assign_course_id'];
-				$date=$_POST['date'];
-				unset($_POST['year_id']);
-				unset($_POST['search_text']);
-				unset($_POST['search_field']);
-				unset($_POST['per_page']);
-				unset($_POST['order_by']);
-				unset($_POST['page']);
-				unset($_POST['assign_course_id']);
-				unset($_POST['date']);
-					
-				//$this->pr($_POST);die;
-				if(!empty($_POST)){
-				foreach ($_POST as $key=>$data){
-					$arr_inner=array();
-					$arr_inner['student_id']=$key;
-					$arr_inner['assign_course_id']=$assign_course_id;
-					$arr_inner['is_present']=(int)$data;
-					$arr_inner['date']=$date;
-					$arr[]=$arr_inner;
-		
-				}
-					
-				$this->db->insert_batch('attendance', $arr);
-				//echo'attendance marked successfully';
-				$status = array('status'  => 'attendance successfully marked');
-				$this->session->set_flashdata('status', $status);
-				ci_redirect("admin/attendance");
-				
-				}
-				else{
-					$status = array('status'  => 'Nothing selected');
-					$this->session->set_flashdata('status', $status);
-					ci_redirect("admin/attendance");
-				}	
-				//ci_redirect("admin/attendance");
-			}
-			else{
-				$status = array('status'  => 'attendance could not be  marked');
-				$this->session->set_flashdata('status', $status);
-				ci_redirect("admin/attendance");
-			
-			}
-	}
-	catch(Exception $e){
-			show_error($e->getMessage().' --- '.$e->getTraceAsString());
-		}
-		//$this->pr($_POST);
-	
-	
-	
-		//$this->pr($arr);
-	
-		//test_method('Hello World');
-		//$this->_example_output((object)array('output' => '' , 'js_files' => array() , 'css_files' => array()));
-	}
+
 
 	function select_customer()
 	{
@@ -145,8 +83,8 @@ class Report extends CI_Controller {
 			$crud->set_subject('Customer Report');
 			 $crud->set_model('customer_report');			
 			$crud->unset_add();
-			//$crud->unset_print();
-			//$crud->unset_export();
+			$crud->unset_print();
+			$crud->unset_export();
 			$crud->unset_delete();
 			$crud->unset_edit();
 			
@@ -171,6 +109,8 @@ class Report extends CI_Controller {
 			$crud->callback_column('amount',array($this,'append_currency'));
 				
 			$output = $crud->render();
+			$output->payment_count=$this->payment_count;	//passing payment count tot he view
+			$output->journey_count= $this->journey_count;
 			
 			
 
@@ -198,8 +138,8 @@ class Report extends CI_Controller {
 			$crud->set_subject('Corporate Report');
 			$crud->set_model('corporate_report');
 			$crud->unset_add();
-			//$crud->unset_print();
-			//$crud->unset_export();
+			$crud->unset_print();
+			$crud->unset_export();
 			$crud->unset_delete();
 			$crud->unset_edit();
 				
@@ -225,6 +165,7 @@ class Report extends CI_Controller {
 	
 			$output = $crud->render();
 			$output->payment_count=$this->payment_count;	//passing payment count tot he view
+			$output->journey_count= $this->journey_count;
 				
 	//$this->pr($output);
 			$content = $this->load->view('admin/corporate_report.php',$output,true);
@@ -236,14 +177,12 @@ class Report extends CI_Controller {
 			}
 			}
 	
-	function check_attendance(){
-		
-		echo $this->attendance->check_attendance($_POST);
-	}
+	
     
 	function append_currency($value,$id){//if checked checkbox is posted else hidden field
 		
 		 $this->payment_count+=$value;
+		 $this->journey_count+=1;
 		return CURRENCY_UNIT.$value; //currency unit is constant set in contants
 	
 	}

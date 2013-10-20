@@ -7,11 +7,3 @@ foreach($css_files as $file): ?>
 <?php endforeach; ?>
 
 <?php echo $output; ?>
-<br>
-<table>
-<tr class="odd"><th>Total Amount</th>	<td><?php echo CURRENCY_UNIT. $payment_count; ?></td></tr>
-<tr class="even"><th>Total Journeys</th>	<td><?php echo $journey_count; ?></td></tr>
-
-
-			
-</table>

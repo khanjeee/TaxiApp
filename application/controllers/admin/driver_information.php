@@ -66,6 +66,8 @@ class Driver_information extends CI_Controller {
 			$crud->set_subject('Driver Info');
 			$crud->required_fields('code','name','description');
 			
+			$crud->unset_print();
+			$crud->unset_export();
 			$crud->columns('name','age','gender','contact_no','license_no','cab_id','user_id','pob_status','post_check_in','dispatcher_id');
 			
 			/*Generating dropdwons for year section and course status

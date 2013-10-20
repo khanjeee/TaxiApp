@@ -414,11 +414,12 @@
             <li class="ic-gallery dd"><a href="#"><span>Reports</span></a>
             	<ul>
                     <li ><a href="<?php echo site_url('admin/report/select_customer') ?>"><span>Customer</span></a></li>
-                    <li ><a href="#"><span>Corporate</span></a></li>
+                    <li ><a href="<?php echo site_url('admin/report/select_corporate') ?>"><span>Corporate</span></a></li>
+                    
                 </ul>
             
             </li>
-            
+           <li class="ic-gallery dd"><a href="<?php echo site_url('admin/check_in_stands/view') ?>"><span>Stands</span></a></li>
 		</ul>
     </div>
     <div class="clear">
