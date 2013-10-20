@@ -1,10 +1,10 @@
 <?php
-class Customer_report extends grocery_CRUD_Model
+class Corporate_report extends grocery_CRUD_Model
 {
 //The function get_list is just a copy-paste from grocery_CRUD_Model
 	function get_list()
 	{
-		$user_id=(isset($_POST['user_id']))? $_POST['user_id'] : 0;	
+		$corporate_id=(isset($_POST['corporate_id']))? $_POST['corporate_id'] : -1;	
 		$start_date=(isset($_POST['start_date']))? $_POST['start_date'] : NULL;	
 		$end_date=(isset($_POST['end_date']))? $_POST['end_date'] : NULL;	
 		//print_r($_POST); die;
@@ -36,11 +36,11 @@ class Customer_report extends grocery_CRUD_Model
 	
   // ADD YOUR JOIN HERE for example: <------------------------------------------------------
  //  $this->db->join('user_log','user_log.user_id = users.id');
-   $this->db->join('payment','payment.customer_id = '. $this->table_name . '.id');
+   $this->db->join('payment','payment.customer_id = '. $this->table_name . '.id'); //$this->table_name is users table passsed from crud
    $this->db->join('journey_users','journey_users.journey_id = payment.journey_id');
    $this->db->join('journeys','journeys.id = journey_users.journey_id');
    $this->db->join('driver_information','driver_information.cab_id = journeys.cab_id');
-   $this->db->where('payment.customer_id',$user_id);
+   $this->db->where('users.corporate_id',$corporate_id);
    if(!empty($start_date)){
    $this->db->where('payment.created >=',$start_date.' 00:00:00'); //00:00:00 appended to select items from start of day
    }   

@@ -2,7 +2,7 @@
 
 class Report extends CI_Controller {
 	
-	public   $promoted_students=array();
+	public   $payment_count=0;
 
 	function __construct()
 	{   
@@ -114,6 +114,15 @@ class Report extends CI_Controller {
 	}
 	
 	
+	function select_corporate()
+	{
+		$status=$this->session->flashdata('status');
+		$corporate=$this->corporate->get_corporate_dropdown(1);
+		$content = $this->load->view('admin/select_corporate.php',	array('corporate' => $corporate),true);
+		$this->load->view('admin/master', array('content' => $content));
+	}
+	
+	
 	function index()
 	{   /* $yearaa=1;
 		$year="admin/promote_students/view/{$yearaa}";
@@ -174,6 +183,59 @@ class Report extends CI_Controller {
 		}
 	}
 	
+	
+	
+	function corporate_report()
+	{
+	
+		//print_r($_POST) ; die;
+	
+		try{
+			$crud = new grocery_CRUD();
+	
+			$crud->set_theme('datatables');
+			$crud->set_table('users');
+			$crud->set_subject('Corporate Report');
+			$crud->set_model('corporate_report');
+			$crud->unset_add();
+			//$crud->unset_print();
+			//$crud->unset_export();
+			$crud->unset_delete();
+			$crud->unset_edit();
+				
+			//$crud->unset_jquery();
+			//$crud->unset_jquery_ui();
+			//$crud->unset_columns();
+				
+				 	
+				 	 	
+			/* if(intval($this->uri->segment(4))) {	//returns students by year if 4th segment exist
+			 //	$crud->where('assign_course_id =', intval($this->uri->segment(4)));
+			$crud->where('batch_year =', $this->uri->segment(5));
+			$crud->where('section_id =', $this->uri->segment(6));
+				
+			}
+			else{
+			$crud->where('year_id =',0); //hide all students if not id passed
+			} */
+				
+			$crud->columns('first_name','payment_type','pickup_door_address','pickup_time','amount','driver_name');
+						
+			$crud->callback_column('amount',array($this,'append_currency'));
+	
+			$output = $crud->render();
+			$output->payment_count=$this->payment_count;	//passing payment count tot he view
+				
+	//$this->pr($output);
+			$content = $this->load->view('admin/corporate_report.php',$output,true);
+					// Pass to the master view
+			$this->load->view('admin/master', array('content' => $content));
+	
+		}catch(Exception $e){
+					show_error($e->getMessage().' --- '.$e->getTraceAsString());
+			}
+			}
+	
 	function check_attendance(){
 		
 		echo $this->attendance->check_attendance($_POST);
@@ -181,6 +243,7 @@ class Report extends CI_Controller {
     
 	function append_currency($value,$id){//if checked checkbox is posted else hidden field
 		
+		 $this->payment_count+=$value;
 		return CURRENCY_UNIT.$value; //currency unit is constant set in contants
 	
 	}
