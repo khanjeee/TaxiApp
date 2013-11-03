@@ -1,14 +1,17 @@
 <?php
-class Students_attendance extends grocery_CRUD_Model
+class Driver_report extends grocery_CRUD_Model
 {
 //The function get_list is just a copy-paste from grocery_CRUD_Model
 	function get_list()
 	{
-		//$this->pr($_POST); die;
+		$driver_id=(isset($_POST['driver_id']))? $_POST['driver_id'] : 0;	
+		$start_date=(isset($_POST['start_date']))? $_POST['start_date'] : NULL;	
+		$end_date=(isset($_POST['end_date']))? $_POST['end_date'] : NULL;	
+		//print_r($_POST); die;
 	 if($this->table_name === null)
 	  return false;
 	
-	 $select = "{$this->table_name}.*";
+	 $select = "{$this->table_name}.*,payment.*,journey_users.*,driver_information.name as 'driver_name'";
 	
   // ADD YOUR SELECT FROM JOIN HERE, for example: <------------------------------------------------------
   // $select .= ", user_log.created_date, user_log.update_date";
@@ -33,12 +36,18 @@ class Students_attendance extends grocery_CRUD_Model
 	
   // ADD YOUR JOIN HERE for example: <------------------------------------------------------
  //  $this->db->join('user_log','user_log.user_id = users.id');
-   $this->db->join('user_student','user_student.id = '. $this->table_name . '.student_id'); //matching studet id from attendace
-   $this->db->where('user_student.student_id', $this->uri->segment(4));
-   $this->db->where($this->table_name.'.assign_course_id', $this->uri->segment(5));
-   $this->db->where($this->table_name.'.date', $this->uri->segment(6));
+   $this->db->join('payment','payment.customer_id = '. $this->table_name . '.id');
+   $this->db->join('journey_users','journey_users.journey_id = payment.journey_id');
+   $this->db->join('journeys','journeys.id = journey_users.journey_id');
+   $this->db->join('driver_information','driver_information.cab_id = journeys.cab_id');
+   $this->db->where('driver_information.id',$driver_id);
+   if(!empty($start_date)){
+   $this->db->where('payment.created >=',$start_date.' 00:00:00'); //00:00:00 appended to select items from start of day
+   }   
+   if(!empty($end_date)){
+   	$this->db->where('payment.created <=',$end_date.' 23:59:59'); //23:59:59 appended to select items till the end of day
+   }
    
-  
     
 	 $results = $this->db->get($this->table_name)->result();
 	

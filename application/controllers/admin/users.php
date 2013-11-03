@@ -16,6 +16,8 @@ class Users extends CI_Controller {
 		$this->load->model('Groups_Model','groups');
 		$this->load->model('Corporate_Model','corporate');
 		$this->load->model('Users_Model','users');
+		$this->load->model('Cab_provider_Model','cab_provider');
+		
 		
 		$this->load->library('session');		
 		$session_data=$this->session->all_userdata();
@@ -64,10 +66,10 @@ class Users extends CI_Controller {
 			$crud->set_theme('datatables');
 			$crud->set_table('users');
 			$crud->set_subject('Users Info');
-			//$crud->required_fields('code','name','description');
+			$crud->required_fields('first_name','last_name','username','gender','phone','user_image','user_id','group_id','status','password');
 			
 			$crud->columns('first_name','last_name','username','gender','phone','user_image','user_id','group_id','status');
-			$crud->fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password','corporate_id');
+			$crud->fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password','corporate_id','cab_provider');
 			//$crud->edit_fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password');
 			$crud->set_field_upload('user_image',UPLOAD_USER_IMAGE);
 			$crud->field_type('password', 'password');
@@ -86,6 +88,7 @@ class Users extends CI_Controller {
 			$crud->callback_edit_field('corporate_id',array($this->corporate,'get_corporate_dropdown'));
 			$crud->callback_edit_field('group_id',array($this->groups,'get_groups_dropdown'));
 			$crud->callback_edit_field('password',array($this,'save_password_copy'));
+			$crud->callback_field('cab_provider',array($this->cab_provider,'get_cab_provider_dropdown')); //dummy @kmdc
 			
 			
 			/*call back for edit form->passes value attribute with items value to the function

@@ -4,7 +4,6 @@ class Report extends CI_Controller {
 
 	public   $payment_count=0;
 	public   $journey_count=0;
-	public   $smart_taxi_earning=0;
 
 	function __construct()
 	{
@@ -26,7 +25,7 @@ class Report extends CI_Controller {
 
 		$session_data=$this->session->all_userdata();
 		if(isset($session_data['group_id']) ){
-			if($session_data['group_id']!=1) {
+			if($session_data['group_id']!=5) {
 				$this->session->set_flashdata('message', 'You must be an admin to view this page');
 				ci_redirect('admin/login','refresh');
 			}
@@ -46,20 +45,22 @@ class Report extends CI_Controller {
 
 	function select_customer()
 	{
+		$session_data=$this->session->all_userdata();
 		$status=$this->session->flashdata('status');
-		$users=$this->users->get_users_dropdown(1);
-		$corporate=$this->corporate->get_corporate_dropdown(1);
-		$content = $this->load->view('admin/select_customer.php',	array('users' => $users,'corporate' => $corporate),true);
-		$this->load->view('admin/master', array('content' => $content));
+		$corporate_id=$this->users->get_corporate_id($session_data['id']);
+		$users=$this->users->get_users_by_corporate_dropdown($corporate_id);
+		$content = $this->load->view('corporate/select_customer.php',	array('users' => $users,'corporate_id' => $corporate_id),true);
+		$this->load->view('corporate/master', array('content' => $content));
 	}
 
 
 	function select_corporate()
 	{
+		$session_data=$this->session->all_userdata();
 		$status=$this->session->flashdata('status');
-		$corporate=$this->corporate->get_corporate_dropdown(1);
-		$content = $this->load->view('admin/select_corporate.php',	array('corporate' => $corporate),true);
-		$this->load->view('admin/master', array('content' => $content));
+		$corporate_id=$this->users->get_corporate_id($session_data['id']);
+		$content = $this->load->view('corporate/select_corporate.php',	array('corporate_id' => $corporate_id),true);
+		$this->load->view('corporate/master', array('content' => $content));
 	}
 
 	function select_driver()
@@ -99,18 +100,15 @@ class Report extends CI_Controller {
 			$crud->unset_edit();
 
 			$crud->columns('first_name','payment_type','pickup_door_address','pickup_time','amount','driver_name');
-			$crud->callback_column('amount',array($this,'calculate_total_amount'));
+			$crud->callback_column('amount',array($this,'append_currency'));
 
-			$crud->display_as('first_name','Customer Name');
-			$crud->display_as('amount','Trip Fare');
-			
 			$output = $crud->render();
 			$output->payment_count=$this->payment_count;	//passing payment count tot he view
 			$output->journey_count= $this->journey_count;
 
-			$content = $this->load->view('admin/customer_report.php',$output,true);
+			$content = $this->load->view('corporate/customer_report.php',$output,true);
 			// Pass to the master view
-			$this->load->view('admin/master', array('content' => $content));
+			$this->load->view('corporate/master', array('content' => $content));
 
 		}catch(Exception $e){
 			show_error($e->getMessage().' --- '.$e->getTraceAsString());
@@ -139,19 +137,16 @@ class Report extends CI_Controller {
 
 			$crud->columns('first_name','payment_type','pickup_door_address','pickup_time','amount','driver_name');
 
-			$crud->callback_column('amount',array($this,'calculate_total_amount'));
-			
-			$crud->display_as('first_name','Customer Name');
-			$crud->display_as('amount','Trip Fare');
+			$crud->callback_column('amount',array($this,'append_currency'));
 
 			$output = $crud->render();
 			$output->payment_count=$this->payment_count;	//passing payment count tot he view
 			$output->journey_count= $this->journey_count;
 
 			//$this->pr($output);
-			$content = $this->load->view('admin/corporate_report.php',$output,true);
+			$content = $this->load->view('corporate/corporate_report.php',$output,true);
 			// Pass to the master view
-			$this->load->view('admin/master', array('content' => $content));
+			$this->load->view('corporate/master', array('content' => $content));
 
 		}catch(Exception $e){
 			show_error($e->getMessage().' --- '.$e->getTraceAsString());
@@ -176,23 +171,18 @@ class Report extends CI_Controller {
 			$crud->unset_delete();
 			$crud->unset_edit();
 
-			$crud->columns('driver_name','first_name','payment_type','pickup_door_address','pickup_time','amount','tip_given','smart_taxi_earning');
+			$crud->columns('driver_name','first_name','payment_type','pickup_door_address','pickup_time','amount');
 			$crud->display_as('first_name','Customer Name');
-			$crud->display_as('amount','Trip Fare');
-			$crud->callback_column('amount',array($this,'calculate_total_amount'));
-			$crud->callback_column('tip_given',array($this,'tip_given'));
-			$crud->callback_column('smart_taxi_earning',array($this,'calculate_smart_taxi_earning'));
-				
-			
+			$crud->callback_column('amount',array($this,'append_currency'));
+
 			$output = $crud->render();
 			$output->payment_count=$this->payment_count;	//passing payment count tot he view
 			$output->journey_count= $this->journey_count;
-			$output->smart_taxi_earning=$this->smart_taxi_earning;
 			
 			
 				
 			//$this->pr($output);
-			$content = $this->load->view('admin/driver_report.php',$output,true);
+			$content = $this->load->view('admin/corporate_report.php',$output,true);
 			// Pass to the master view
 			$this->load->view('admin/master', array('content' => $content));
 
@@ -201,23 +191,12 @@ class Report extends CI_Controller {
 		}
 	}
 
-	function calculate_total_amount($value,$id){//if checked checkbox is posted else hidden field
+	function append_currency($value,$id){//if checked checkbox is posted else hidden field
 
 		$this->payment_count+=$value;
 		$this->journey_count+=1;
-		$amount=$value;
-		return CURRENCY_UNIT.$amount; //currency unit is constant set in contants
+		return CURRENCY_UNIT.$value; //currency unit is constant set in contants
 
-	}
-	function calculate_smart_taxi_earning($value,$row){//if checked checkbox is posted else hidden field
-	
-		$this->smart_taxi_earning+=intval(str_replace('$', '', $row->amount))*(0.15); //currency unit is constant set in contants
-		return CURRENCY_UNIT.intval(str_replace('$', '', $row->amount))*(0.15);
-	}
-	
-	function tip_given($value,$row){//if checked checkbox is posted else hidden field
-	
-		return CURRENCY_UNIT.$value;
 	}
 
 

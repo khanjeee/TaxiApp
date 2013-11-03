@@ -35,11 +35,18 @@ class Login extends CI_Controller {
 		$resp=$this->curl($email,$password);
 		if(!empty($resp)){
 			$json_data=json_decode($resp,true);
+			
 			if(isset($json_data['body']['User'])){
 				if($json_data['body']['User']['group_id']==1){// set session if group id is 1
 					
 					$this->session->set_userdata($json_data['body']['User']); //set data in session
 					ci_redirect('admin/dashboard');  // send to admin page 
+				}
+				
+			elseif ($json_data['body']['User']['group_id']==5){// set session if group id is 5 and redirect to corporate
+						
+					$this->session->set_userdata($json_data['body']['User']); //set data in session
+					ci_redirect('corporate/dashboard');  // send to admin page
 				}
 				else{
 					$this->data['message']="Only administrators are allowed to login";
