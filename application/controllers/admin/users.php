@@ -17,6 +17,7 @@ class Users extends CI_Controller {
 		$this->load->model('Corporate_Model','corporate');
 		$this->load->model('Users_Model','users');
 		$this->load->model('Cab_provider_Model','cab_provider');
+		$this->load->model('Department_Model','department');
 		
 		
 		$this->load->library('session');		
@@ -69,7 +70,7 @@ class Users extends CI_Controller {
 			$crud->required_fields('first_name','last_name','username','gender','phone','user_image','user_id','group_id','status','password');
 			
 			$crud->columns('first_name','last_name','username','gender','phone','user_image','user_id','group_id','status');
-			$crud->fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password','corporate_id','cab_provider');
+			$crud->fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password','corporate_id','department_id','cab_provider');
 			//$crud->edit_fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password');
 			$crud->set_field_upload('user_image',UPLOAD_USER_IMAGE);
 			$crud->field_type('password', 'password');
@@ -89,6 +90,7 @@ class Users extends CI_Controller {
 			$crud->callback_edit_field('group_id',array($this->groups,'get_groups_dropdown'));
 			$crud->callback_edit_field('password',array($this,'save_password_copy'));
 			$crud->callback_field('cab_provider',array($this->cab_provider,'get_cab_provider_dropdown')); //dummy @kmdc
+			$crud->callback_field('department_id',array($this->department,'get_department_dropdown'));
 			
 			
 			/*call back for edit form->passes value attribute with items value to the function
@@ -113,17 +115,11 @@ class Users extends CI_Controller {
 			/*hidding a field for insertion via call_before_insert crud requires field to be present in Crud->fields*/
 		//	$crud->change_field_type('created_by','invisible');
 			
-			/*used to change names of the fields
-			$crud->display_as('description','Description');
-			$crud->display_as('name','Name');
-			$crud->display_as('status','Status');
-			$crud->display_as('section_id','Section');
-			$crud->display_as('year_id','Year');
+			/*used to change names of the fields*/
+			
+			$crud->display_as('corporate_id','Corporate');
 			$crud->display_as('department_id','Department');
 			
-			*/
-			//$this->pr($crud); 
-			//die;
 			$output = $crud->render();
 			//$this->pr($output);
 
@@ -143,6 +139,7 @@ class Users extends CI_Controller {
 		$post_array['password']=md5(SALT.$post_array['password']);
 		//check group id if corporate not selected set corporate id 0
 		$post_array['corporate_id']=($post_array['group_id']!=5)? 0 : $post_array['corporate_id'];
+		$post_array['department_id']=($post_array['group_id']!=5)? 0 : $post_array['department_id'];
 		return $post_array;
 		
 	

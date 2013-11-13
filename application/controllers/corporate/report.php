@@ -99,9 +99,18 @@ class Report extends CI_Controller {
 			$crud->unset_delete();
 			$crud->unset_edit();
 
-			$crud->columns('first_name','payment_type','pickup_door_address','pickup_time','amount','driver_name');
+			$crud->columns('created','time','first_name','payment_type','pickup_door_address','pickup_time','amount','driver_name','tip_given');
 			$crud->callback_column('amount',array($this,'append_currency'));
-
+			$crud->callback_column('tip_given',array($this,'tip_given'));
+			$crud->callback_column('created',array($this,'created'));
+			
+			$crud->field_type('created', 'date'); 
+			
+			$crud->display_as('amount','Trip Fare');
+			$crud->display_as('created','Date');
+			$crud->display_as('tip_given','Tip');
+				
+			
 			$output = $crud->render();
 			$output->payment_count=$this->payment_count;	//passing payment count tot he view
 			$output->journey_count= $this->journey_count;
@@ -135,10 +144,18 @@ class Report extends CI_Controller {
 			$crud->unset_delete();
 			$crud->unset_edit();
 
-			$crud->columns('first_name','payment_type','pickup_door_address','pickup_time','amount','driver_name');
+			$crud->columns('created','time','first_name','payment_type','pickup_door_address','pickup_time','amount','driver_name','tip_given');
 
 			$crud->callback_column('amount',array($this,'append_currency'));
-
+			$crud->callback_column('tip_given',array($this,'tip_given'));
+			$crud->callback_column('created',array($this,'created'));
+			//$crud->field_type('created', 'date');
+			
+			$crud->display_as('amount','Trip Fare');
+			$crud->display_as('created','Date');
+			$crud->display_as('tip_given','Tip');
+				
+			
 			$output = $crud->render();
 			$output->payment_count=$this->payment_count;	//passing payment count tot he view
 			$output->journey_count= $this->journey_count;
@@ -171,10 +188,18 @@ class Report extends CI_Controller {
 			$crud->unset_delete();
 			$crud->unset_edit();
 
-			$crud->columns('driver_name','first_name','payment_type','pickup_door_address','pickup_time','amount');
+			$crud->columns('created','time','driver_name','first_name','payment_type','pickup_door_address','pickup_time','amount','tip_given');
 			$crud->display_as('first_name','Customer Name');
 			$crud->callback_column('amount',array($this,'append_currency'));
-
+			$crud->callback_column('tip_given',array($this,'tip_given'));
+			$crud->callback_column('created',array($this,'created'));
+			
+			$crud->field_type('created', 'date');
+			
+			$crud->display_as('amount','Trip Fare');
+			$crud->display_as('created','Date');
+			$crud->display_as('tip_given','Tip');
+				
 			$output = $crud->render();
 			$output->payment_count=$this->payment_count;	//passing payment count tot he view
 			$output->journey_count= $this->journey_count;
@@ -197,6 +222,18 @@ class Report extends CI_Controller {
 		$this->journey_count+=1;
 		return CURRENCY_UNIT.$value; //currency unit is constant set in contants
 
+	}
+	function tip_given($value,$row){//if checked checkbox is posted else hidden field
+	
+		return CURRENCY_UNIT.$value;
+	}
+	
+	function created($value,$row){//if checked checkbox is posted else hidden field
+	
+		 $val= explode(' ', $value); 
+		 $row->time=$val[1];  //setting time to be displayed in time field
+		 return $val[0];
+		 
 	}
 
 

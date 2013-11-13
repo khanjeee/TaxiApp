@@ -408,7 +408,7 @@
     </div>
     <div class="grid_12">
         <ul class="nav main">
-            <li class="ic-gallery dd"><a href="<?php echo site_url('admin//users/view') ?>"><span>Users</span></a></li>
+            <li class="ic-gallery dd"><a href="<?php echo site_url('admin/users/view') ?>"><span>Users</span></a></li>
             <li class="ic-gallery dd"><a href="<?php echo site_url('admin/driver_information/view') ?>"><span>Driver</span></a></li>
             <li class="ic-gallery dd"><a href="<?php echo site_url('admin/corporate/view') ?>"><span>Corporate</span></a></li>
             <li class="ic-gallery dd"><a href="#"><span>Reports</span></a>
@@ -421,6 +421,9 @@
             
             </li>
            <li class="ic-gallery dd"><a href="<?php echo site_url('admin/check_in_stands/view') ?>"><span>Stands</span></a></li>
+           <li class="ic-gallery dd"><a href="<?php echo site_url('admin/cab_provider/view') ?>"><span>Cab Provider</span></a></li>
+           <li class="ic-gallery dd"><a href="<?php echo site_url('admin/cabs/view') ?>"><span>Cab</span></a></li>
+       
 		</ul>
     </div>
     <div class="clear">
