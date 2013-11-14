@@ -18,6 +18,7 @@ class Cabs extends CI_Controller {
 		$this->load->model('Users_Model','users');
 		$this->load->model('Cab_provider_Model','cab_provider');
 		$this->load->model('Dispatcher_Model','dispatcher');
+		$this->load->model('Driver_Model','driver');
 		
 		
 		$this->load->library('session');		
@@ -54,7 +55,30 @@ class Cabs extends CI_Controller {
 		//$this->_example_output((object)array('output' => '' , 'js_files' => array() , 'css_files' => array()));
 	}
 
-
+	function assign()
+	{
+		$status=$this->session->flashdata('message');
+		$drivers=$this->users->get_users_by_group_id_dropdown(6); //getting drivers
+		$cabs=$this->driver->get_cabs_not_in_driver_information_dropdown();
+	
+		$content = $this->load->view('admin/assign_cab.php',	array('drivers' => $drivers,'cabs' => $cabs,'status'=>$status),true);
+		$this->load->view('admin/master', array('content' => $content));
+	}
+	
+	function insert_assigned(){
+		if(isset($_POST) && !empty($_POST['user_id']) && !empty($_POST['cab_id'])){
+			
+			$this->db->insert('driver_to_cabs', array('cab_id' => $_POST['cab_id'] ,'driver_id' => $_POST['user_id']));
+			
+			$this->db->where('id', $_POST['cab_id']);
+			$this->db->update('cabs', array('driver_assigned' => 'yes'));
+			
+			$this->session->set_flashdata('message', 'Cab successfully assigned to driver.');
+			ci_redirect('admin/cabs/assign','refresh');
+		
+		}
+		
+	}
 
 	function view()
 	{		

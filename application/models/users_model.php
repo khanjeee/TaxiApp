@@ -29,6 +29,23 @@ class Users_Model  extends CI_Model  {
     	return form_dropdown('user_id', $arrUsers,$value,'id="user_id"');
     }
     
+    function get_users_by_group_id_dropdown($group_id)
+    {
+    	$value=(!empty($value))? $value : 1;
+    	$arrUsers=array();
+    
+    	$this->db->select('id,first_name');
+    	$query=$this->db->get_where('users', array('group_id' => $group_id));
+    	 
+    
+    	foreach ($query->result() as $data ){
+    		 
+    		$arrUsers[$data->id]=$data->first_name;
+    	}
+    
+    	return form_dropdown('user_id', $arrUsers,$value,'id="user_id"');
+    }
+    
     function get_users_dropdown($value)
     {   
     	$value=(!empty($value))? $value : 1;

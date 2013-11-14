@@ -39,6 +39,25 @@ class Driver_Model  extends CI_Model  {
     	return $result[0]->name;
     	}
     }
+    
+    function get_cabs_not_in_driver_information_dropdown()
+    {
+    	$query=$this->db->query('SELECT id,cab_no FROM cabs WHERE id NOT IN (SELECT cab_id FROM driver_information) ');
+		
+    	$result=$query->result();
+    	$arrCab=array();
+    	if(!empty($result)){
+	    	foreach ($result as $data ){
+	    			
+	    		$arrCab[$data->id]=$data->cab_no;
+	    	}
+	    
+	    	return form_dropdown("cab_id", $arrCab,"id='cab_dd'");
+    	}
+    }
+    
+    
+  
 
     
 

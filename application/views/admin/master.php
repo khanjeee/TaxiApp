@@ -422,7 +422,11 @@
             </li>
            <li class="ic-gallery dd"><a href="<?php echo site_url('admin/check_in_stands/view') ?>"><span>Stands</span></a></li>
            <li class="ic-gallery dd"><a href="<?php echo site_url('admin/cab_provider/view') ?>"><span>Cab Provider</span></a></li>
-           <li class="ic-gallery dd"><a href="<?php echo site_url('admin/cabs/view') ?>"><span>Cab</span></a></li>
+           <li class="ic-gallery dd"><a href="<?php echo site_url('admin/cabs/view') ?>"><span>Cab</span></a>
+           <ul>
+                    <li ><a href="<?php echo site_url('admin/cabs/assign') ?>"><span>Assign</span></a></li>
+            </ul>
+           </li>
        
 		</ul>
     </div>
