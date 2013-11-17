@@ -64,7 +64,20 @@ class Cab_provider_Model  extends CI_Model  {
     	}
     }
 
+    function get_cabs_by_driver_id($driver_id)
+    {
     
+    	$query=$this->db->query("SELECT id,cab_no FROM cabs 
+								WHERE cab_provider_id=(SELECT cab_provider_id FROM driver_information WHERE `user_id`={$driver_id} limit 1)
+								AND id NOT IN (SELECT cab_id FROM driver_information)");
+    	    	$result=$query->result();
+    
+    	if(!empty($result)){
+    		 
+    		return json_encode($result);
+    		 
+    	}
+    }
 
 
 

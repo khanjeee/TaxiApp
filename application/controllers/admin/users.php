@@ -67,9 +67,9 @@ class Users extends CI_Controller {
 			$crud->set_theme('datatables');
 			$crud->set_table('users');
 			$crud->set_subject('Users Info');
-			$crud->required_fields('first_name','last_name','username','gender','phone','user_image','user_id','group_id','status','password');
+			$crud->required_fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password');
 			
-			$crud->columns('first_name','last_name','username','gender','phone','user_image','user_id','group_id','status');
+			$crud->columns('first_name','last_name','username','gender','phone','user_image','group_id','status');
 			$crud->fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password','corporate_id','department_id','cab_provider');
 			//$crud->edit_fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password');
 			$crud->set_field_upload('user_image',UPLOAD_USER_IMAGE);
@@ -84,6 +84,8 @@ class Users extends CI_Controller {
 			$crud->callback_add_field('year_id',array($this->years,'get_years_dropdown'));
 			
 			*/
+			
+			$crud->callback_column('group_id',array($this->groups,'get_group_by_id'));
 			$crud->callback_add_field('group_id',array($this->groups,'get_groups_dropdown'));
 			$crud->callback_add_field('corporate_id',array($this->corporate,'get_corporate_dropdown'));
 			$crud->callback_edit_field('corporate_id',array($this->corporate,'get_corporate_dropdown'));
@@ -119,6 +121,7 @@ class Users extends CI_Controller {
 			
 			$crud->display_as('corporate_id','Corporate');
 			$crud->display_as('department_id','Department');
+			$crud->display_as('group_id','Group');
 			
 			$output = $crud->render();
 			//$this->pr($output);

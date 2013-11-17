@@ -47,7 +47,7 @@ class Driver_report extends grocery_CRUD_Model
    if(!empty($end_date)){
    	$this->db->where('payment.created <=',$end_date.' 23:59:59'); //23:59:59 appended to select items till the end of day
    }
-   
+   $this->db->order_by("pickup_time", "desc");
     
 	 $results = $this->db->get($this->table_name)->result();
 	

@@ -9,8 +9,9 @@ ul.nav,
 ul.nav * { margin:0;padding:0;}
 ul.nav {
   position:relative;
-  background:url(../img/nav-repeat2.jpg) repeat-x !important;
+  background:#3f3f3f;
   max-width:100%;
+   padding-left: 22%;
   height:3.7em; 
   }
 ul.nav li {
@@ -61,7 +62,7 @@ ul.nav li ul li a {
 
 ul.nav li:hover a,
 ul.nav li a:hover,
-ul.nav li a:focus {color:#000; background:#103D5F;}
+ul.nav li a:focus {color:#000; background:#000;}
 ul.nav li a:active {color:#666; background:#fff;}
 ul.nav li:hover ul {left:0;z-index:10}
 ul.nav li ul,
@@ -73,8 +74,8 @@ ul.nav li:hover ul li a:active {color:#666; background:#fff;}
 ul.nav li.current a {color:#666; background:#fff; cursor:default; font-weight:bold;}
 ul.nav li.current ul {left:0;z-index:5}
 ul.nav li.current ul,
-ul.nav li.current {background:#103D5F !important}
-ul.nav li.current ul li a {color:#444; background:#103D5F; font-weight:normal;}
+ul.nav li.current {background:#444444	 !important}
+ul.nav li.current ul li a {color:#444; background:#444444	; font-weight:normal;}
 ul.nav li.current ul li a:hover {color:#000; background:#fff;}
 ul.nav li ul li.current a,
 ul.nav li ul li.current a:hover,
@@ -110,22 +111,22 @@ ul.main li ul li a {
   height:3em;
   text-align:left;
   color:#fff;
-  border-top:1px solid #1A3A52;
-  background:#103D5F;
+  border-top:1px solid #5C5C5C;
+  background:#444444	;
 }
-ul.main li a:focus {color:#fff; background:#103D5F;}
+ul.main li a:focus {color:#fff; background:#000;}
 ul.main li ul li a:hover {
   color:#fff;
-  background:#103D5F;
+  background:#575757	;
 }
 ul.main li:hover a {
   color:#fff;
-  background:#103D5F;
+  background:#575757	;
 }
 ul.main li:hover ul li a {color:#fff;}
-ul.main li:hover ul li a:hover {color:#fff; background:#2D536F;}
-ul.main li:hover a:active {background:#103D5F;}
-ul.main li:hover ul li a:active {color:#fff; background:#103D5F;}
+ul.main li:hover ul li a:hover {color:#fff; background:#696969;}
+ul.main li:hover a:active {background:#444444	;}
+ul.main li:hover ul li a:active {color:#fff; background:#444444	;}
 
 
 /* secondary list

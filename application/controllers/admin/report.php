@@ -5,6 +5,7 @@ class Report extends CI_Controller {
 	public   $payment_count=0;
 	public   $journey_count=0;
 	public   $smart_taxi_earning=0;
+	public   $tip_count=0;
 
 	function __construct()
 	{
@@ -97,16 +98,19 @@ class Report extends CI_Controller {
 			//$crud->unset_export();
 			$crud->unset_delete();
 			$crud->unset_edit();
-
-			$crud->columns('first_name','payment_type','pickup_door_address','pickup_time','amount','driver_name');
+			
+			$crud->columns('first_name','payment_type','pickup_door_address','pickup_time','dropOff_door_address','dropOff_time','amount','driver_name','tip_given');
 			$crud->callback_column('amount',array($this,'calculate_total_amount'));
 
 			$crud->display_as('first_name','Customer Name');
 			$crud->display_as('amount','Trip Fare');
+			$crud->callback_column('tip_given',array($this,'tip_given'));
+				
 			
 			$output = $crud->render();
 			$output->payment_count=$this->payment_count;	//passing payment count tot he view
 			$output->journey_count= $this->journey_count;
+			$output->tip_count= $this->tip_count;
 
 			$content = $this->load->view('admin/customer_report.php',$output,true);
 			// Pass to the master view
@@ -137,16 +141,18 @@ class Report extends CI_Controller {
 			$crud->unset_delete();
 			$crud->unset_edit();
 
-			$crud->columns('first_name','payment_type','pickup_door_address','pickup_time','amount','driver_name');
+			$crud->columns('first_name','payment_type','pickup_door_address','pickup_time','dropOff_door_address','dropOff_time','amount','driver_name','tip_given');
 
 			$crud->callback_column('amount',array($this,'calculate_total_amount'));
 			
 			$crud->display_as('first_name','Customer Name');
 			$crud->display_as('amount','Trip Fare');
+			$crud->callback_column('tip_given',array($this,'tip_given'));
 
 			$output = $crud->render();
 			$output->payment_count=$this->payment_count;	//passing payment count tot he view
 			$output->journey_count= $this->journey_count;
+			$output->tip_count= $this->tip_count;
 
 			//$this->pr($output);
 			$content = $this->load->view('admin/corporate_report.php',$output,true);
@@ -176,7 +182,7 @@ class Report extends CI_Controller {
 			$crud->unset_delete();
 			$crud->unset_edit();
 
-			$crud->columns('driver_name','first_name','payment_type','pickup_door_address','pickup_time','amount','tip_given','smart_taxi_earning');
+			$crud->columns('driver_name','first_name','payment_type','pickup_door_address','pickup_time','dropOff_door_address','dropOff_time','amount','tip_given','smart_taxi_earning');
 			$crud->display_as('first_name','Customer Name');
 			$crud->display_as('amount','Trip Fare');
 			$crud->callback_column('amount',array($this,'calculate_total_amount'));
@@ -188,7 +194,7 @@ class Report extends CI_Controller {
 			$output->payment_count=$this->payment_count;	//passing payment count tot he view
 			$output->journey_count= $this->journey_count;
 			$output->smart_taxi_earning=$this->smart_taxi_earning;
-			
+			$output->tip_count= $this->tip_count;
 			
 				
 			//$this->pr($output);
@@ -216,7 +222,7 @@ class Report extends CI_Controller {
 	}
 	
 	function tip_given($value,$row){//if checked checkbox is posted else hidden field
-	
+		$this->tip_count+=$value;
 		return CURRENCY_UNIT.$value;
 	}
 

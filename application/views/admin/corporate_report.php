@@ -10,6 +10,8 @@ foreach($css_files as $file): ?>
 <table>
 <tr class="odd"><th>Total Trip Fare</th>	<td><?php echo CURRENCY_UNIT.$payment_count; ?></td></tr>
 <tr class="even"><th>Total Journeys</th>	<td><?php echo $journey_count; ?></td></tr>
+<tr class="odd"><th>Total Tip</th>	<td><?php echo CURRENCY_UNIT. $tip_count; ?></td></tr>
+
 
 
 			

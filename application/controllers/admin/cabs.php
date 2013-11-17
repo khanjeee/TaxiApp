@@ -90,13 +90,13 @@ class Cabs extends CI_Controller {
 
 			$crud->set_theme('datatables');
 			$crud->set_table('cabs');
-			$crud->set_subject('Cab Providers');
-			$crud->required_fields('cab_provider_id','cab_no','color','model','make','image_url','cab_available','driver_assigned','status');
+			$crud->set_subject('Cab');
+			$crud->required_fields('cab_provider_id','cab_no','cab_available','driver_assigned','status');
 			
-			$crud->columns('cab_provider_id','cab_no','color','model','make','image_url','cab_available','driver_assigned','status');
-			$crud->fields('cab_provider_id','cab_no','color','model','make','image_url','cab_available','driver_assigned','status');
+			$crud->columns('cab_provider_id','cab_no','color','model','make','cab_available','driver_assigned','status','driver_name');
+			$crud->fields('cab_provider_id','cab_no','color','model','make','cab_available','driver_assigned','status');
 			//$crud->edit_fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password');
-			$crud->set_field_upload('image_url',UPLOAD_CAB_IMAGE);
+			//$crud->set_field_upload('image_url',UPLOAD_CAB_IMAGE);
 			
 			$crud->unset_print();
 			$crud->unset_export();
@@ -105,6 +105,8 @@ class Cabs extends CI_Controller {
 			$crud->callback_edit_field('cab_provider_id',array($this->cab_provider,'get_cab_provider_dropdown'));
 			$crud->callback_column('cab_provider_id',array($this->cab_provider,'get_cab_provider_by_id'));
 			$crud->callback_edit_field('cab_provider_id',array($this,'get_cab_provider_dropdown_edit'));
+			
+			$crud->callback_column('driver_name',array($this,'get_driver_name'));
 			
 				
 			//insertion of created_by not present in form
@@ -156,6 +158,16 @@ class Cabs extends CI_Controller {
 	function get_cab_provider_dropdown_edit($value,$row){
 	
 		return 	$this->cab_provider->get_cab_provider_dropdown($value,null);
+	}
+	
+	function get_cabs_by_driver_id($driver_id=''){
+	
+		echo $this->cab_provider->get_cabs_by_driver_id($driver_id);
+	}
+	function get_driver_name($value,$row){//if checked checkbox is posted else hidden field
+		
+		return $this->driver->get_driver_name_by_cab_id($row->id);
+		
 	}
 	
 

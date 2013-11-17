@@ -52,13 +52,20 @@ class Driver_Model  extends CI_Model  {
 	    		$arrCab[$data->id]=$data->cab_no;
 	    	}
 	    
-	    	return form_dropdown("cab_id", $arrCab,"id='cab_dd'");
+	    	return form_dropdown("cab_id", $arrCab,NULL,"id='cab_id'");
     	}
     }
     
     
   
-
+    function get_driver_name_by_cab_id($cab_id)
+    {
+    	$query = $this->db->get_where('driver_information', array('cab_id' => $cab_id));
+    	$result=$query->result();
+    	if(!empty($result)){
+    		return $result[0]->name;
+    	} 
+    }
     
 
 
