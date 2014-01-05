@@ -54,10 +54,12 @@ class Driver_Model  extends CI_Model  {
 	    
 	    	return form_dropdown("cab_id", $arrCab,NULL,"id='cab_id'");
     	}
+    	else {
+    		$data['']='None';
+    		return form_dropdown("cab_id", $data,NULL,"id='cab_id'");
+    	}
     }
     
-    
-  
     function get_driver_name_by_cab_id($cab_id)
     {
     	$query = $this->db->get_where('driver_information', array('cab_id' => $cab_id));
@@ -65,6 +67,74 @@ class Driver_Model  extends CI_Model  {
     	if(!empty($result)){
     		return $result[0]->name;
     	} 
+    }
+    
+    
+    function get_driver_by_cab_provider_id($cab_provider_id)
+    {
+    
+    	$this->db->select('id,name');
+    	$query = $this->db->get_where('driver_information', array('cab_provider_id' => $cab_provider_id));
+    	$result=$query->result();
+    
+    			if(!empty($result)){
+    	return json_encode($result);
+    		 
+    	}
+    }
+    
+    //first param is the value to be updated and second is the id of the field to be updated
+    function update_driver_name($value,$row_id)
+    {
+	 	$data = array('name' => $value);
+	    $this->db->where('cab_id', $row_id);
+	    $this->db->update('driver_information',$data);
+    }
+   
+    function get_user_id_by_driver_id($driver_id)
+    {
+	    $query = $this->db->get_where('driver_information', array('id' => $driver_id));
+	    $result=$query->result();
+	    if(!empty($result)){
+	    	return $result[0]->user_id;
+	    }
+    }
+    
+    
+    
+    function get_cabs_not_in_driver_information($cab_provider_id)
+    {
+    	$query=$this->db->query("SELECT cabs.`id`,cabs.`cab_no` FROM cabs cabs
+									LEFT JOIN driver_information driver_information ON cabs.`id` = driver_information.`cab_id`
+									WHERE driver_information.`cab_id` IS NULL
+									AND cabs.`cab_provider_id`={$cab_provider_id}");
+    			$result=$query->result();
+    
+    			if(!empty($result)){
+    	 
+    	return json_encode($result);
+    		 
+    	}
+    }
+    
+    function get_lisence_code_by_user_id($user_id)
+    {
+    	$this->db->select('license_code');
+    	$query=$this->db->get_where('driver_information', array('user_id' => $user_id));
+    	$result=$query->result();
+    	if(!empty($result)){
+    		return $result[0]->license_code;
+    	}
+    }
+    
+    function get_cab_provider_by_user_id($user_id)
+    {
+    	$this->db->select('cab_provider_id');
+    	$query=$this->db->get_where('driver_information', array('user_id' => $user_id));
+    	$result=$query->result();
+    	if(!empty($result)){
+    		return $result[0]->cab_provider_id;
+    	}
     }
     
 

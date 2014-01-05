@@ -60,8 +60,9 @@ class Cabs extends CI_Controller {
 		$status=$this->session->flashdata('message');
 		$drivers=$this->users->get_users_by_group_id_dropdown(6); //getting drivers
 		$cabs=$this->driver->get_cabs_not_in_driver_information_dropdown();
+		$cab_provider=$this->cab_provider();
 	
-		$content = $this->load->view('admin/assign_cab.php',	array('drivers' => $drivers,'cabs' => $cabs,'status'=>$status),true);
+		$content = $this->load->view('admin/assign_cab.php',	array('cab_provider'=>$cab_provider,'drivers' => $drivers,'cabs' => $cabs,'status'=>$status),true);
 		$this->load->view('admin/master', array('content' => $content));
 	}
 	
@@ -95,7 +96,7 @@ class Cabs extends CI_Controller {
 			
 			$crud->columns('cab_provider_id','cab_no','color','model','make','cab_available','driver_assigned','status','driver_name');
 			$crud->fields('cab_provider_id','cab_no','color','model','make','cab_available','driver_assigned','status');
-			//$crud->edit_fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password');
+			$crud->edit_fields('cab_provider_id','cab_no','color','model','make','cab_available','driver_assigned','status','driver_name');
 			//$crud->set_field_upload('image_url',UPLOAD_CAB_IMAGE);
 			
 			$crud->unset_print();
@@ -106,12 +107,13 @@ class Cabs extends CI_Controller {
 			$crud->callback_column('cab_provider_id',array($this->cab_provider,'get_cab_provider_by_id'));
 			$crud->callback_edit_field('cab_provider_id',array($this,'get_cab_provider_dropdown_edit'));
 			
+			
 			$crud->callback_column('driver_name',array($this,'get_driver_name'));
+			$crud->callback_edit_field('driver_name',array($this,'driver_name_edit'));
 			
 				
-			//insertion of created_by not present in form
 		//	$crud->callback_before_insert(array($this,'call_before_insert'));
-		//	$crud->callback_before_update(array($this,'call_before_update'));
+			$crud->callback_before_update(array($this,'call_before_update'));
 
 			
 			$crud->display_as('cab_provider_id','Cab Provider');
@@ -132,24 +134,25 @@ class Cabs extends CI_Controller {
     
 	function call_before_insert($post_array){
 		
-		//making md5 with salt before insertion
-		$post_array['password']=md5(SALT.$post_array['password']);
-		//check group id if corporate not selected set corporate id 0
-		$post_array['corporate_id']=($post_array['group_id']!=5)? 0 : $post_array['corporate_id'];
-		$post_array['department_id']=($post_array['group_id']!=5)? 0 : $post_array['department_id'];
 		return $post_array;
-		
 	
 	}
-	function call_before_update($post_array){
-	//making md5 only if the password is changed
-	$post_array['password']=($post_array['password']==$post_array['password_copy'])? $post_array['password']  : md5(SALT.$post_array['password']);	
-	//print_r($post_array['password']); die;
-	return $post_array;
-		
+	function call_before_update($post_array,$row_id){
+		//$this->pr($post_array); die;
+	//	updatind driver in driver information 
+	//do this operation only if driver_name is present because it is not present in case where driver is not assigned to cab
 	
+	if(isset($post_array['driver_name'])){  
+		
+		//first param is the value to be updated and second is the id of the field to be updated
+		$this->driver->update_driver_name($post_array['driver_name'],$row_id); 
+		//un setting to avoid grocery crud errors
+		unset($post_array['driver_name']); 
+	}
+		return $post_array;
 	
 	}
+	
 	function cab_provider(){
 		
 	return 	$this->cab_provider->get_cab_provider_dropdown(null,null);
@@ -164,11 +167,27 @@ class Cabs extends CI_Controller {
 	
 		echo $this->cab_provider->get_cabs_by_driver_id($driver_id);
 	}
+	
+	function get_cabs_not_in_driver_information($cab_provider_id=''){
+	
+		echo $this->driver->get_cabs_not_in_driver_information($cab_provider_id);
+	}
+	
 	function get_driver_name($value,$row){//if checked checkbox is posted else hidden field
 		
 		return $this->driver->get_driver_name_by_cab_id($row->id);
 		
 	}
+	
+	function driver_name_edit($value,$cab_id){
+		
+		$driver_name=$this->driver->get_driver_name_by_cab_id($cab_id);
+		if(!empty($driver_name)){
+		
+		return "<input id='field-driver_name' name='driver_name' type='text' value='{$driver_name}'>";
+		}
+		
+		}
 	
 
 }

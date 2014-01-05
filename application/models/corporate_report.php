@@ -7,7 +7,14 @@ class Corporate_report extends grocery_CRUD_Model
 		$corporate_id=(isset($_POST['corporate_id']))? $_POST['corporate_id'] : -1;	
 		$start_date=(isset($_POST['start_date']))? $_POST['start_date'] : NULL;	
 		$end_date=(isset($_POST['end_date']))? $_POST['end_date'] : NULL;	
-		//print_r($_POST); die;
+		$employee_id=(isset($_POST['employee_id']))? $_POST['employee_id'] : NULL;	
+		$journey_type=($_POST['journey_type']=="0")?  NULL : $_POST['journey_type'] ;
+		$file_number=(isset($_POST['file_number']))? $_POST['file_number'] : NULL;
+		
+		if(!empty($file_number)){
+			$journey_type=$file_number;
+		}
+	//	print_r($journey_type); die;
 	 if($this->table_name === null)
 	  return false;
 	
@@ -43,9 +50,16 @@ class Corporate_report extends grocery_CRUD_Model
    $this->db->where('users.corporate_id',$corporate_id);
    if(!empty($start_date)){
    $this->db->where('payment.created >=',$start_date.' 00:00:00'); //00:00:00 appended to select items from start of day
-   }   
-   if(!empty($end_date)){
+   }
+  if(!empty($end_date)){
    	$this->db->where('payment.created <=',$end_date.' 23:59:59'); //23:59:59 appended to select items till the end of day
+   }
+   if(!empty($journey_type)){
+  // 	die($journey_type);
+   	$this->db->where('journey_users.journey_type =',$journey_type); //matching journey type from journey_users table
+   }
+   if(!empty($employee_id)){
+   	$this->db->where('users.employee_id =',$employee_id); //filtering  corpote users by employee _id
    }
    $this->db->order_by("pickup_time", "desc");
     

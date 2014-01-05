@@ -51,6 +51,16 @@ To :
 				<div class="clear"></div>	
 </div>
 
+<div class="form-field-box odd" >
+<div class="form-display-as-box" >
+Employee ID :
+</div>
+				<div class="form-input-box" id="year_input_box">
+				<input name="employee_id"  type="text" style="width:140px" >	
+				</div>
+				<div class="clear"></div>	
+</div>
+
 </div>
 <div class="pDiv">	
       <div class="form-button-box">

@@ -402,34 +402,33 @@
 </head>
 <body>
 	<!--- ====== Header ====== --->
-	<header> 
-	<!--- Yellow Bar ---> 
-	<section class="yello_bar"> 
+	<header> <!--- Yellow Bar ---> <section class="yello_bar">
 	<div class="admin">
-					<div class="floatleft">
-						<img  src="<?php echo site_url('/img/img-profile.jpg')?>" alt="Profile Pic" />
-					</div>
-					<div class="floatleft marginleft10">
-						<ul class="inline-ul floatleft">
-							<li>Hello Admin</li>
-							<li><a href="<?php echo site_url('admin/logout') ?>">Logout</a></li>
-						</ul>
-					</div>
-				</div>
-	</section>
-	 <!--- / Yellow Bar --->
-	<!--- Black Bar ---> <section class="black_bar">
+		<div class="floatleft">
+			<img src="<?php echo site_url('/img/img-profile.jpg')?>"
+				alt="Profile Pic" />
+		</div>
+		<div class="floatleft marginleft10">
+			<ul class="inline-ul floatleft">
+				<li>Hello Admin</li>
+				<li><a href="<?php echo site_url('admin/logout') ?>">Logout</a></li>
+			</ul>
+		</div>
+	</div>
+	</section> <!--- / Yellow Bar ---> <!--- Black Bar ---> <section
+		class="black_bar">
 
 	<div class="container">
 		<!--- Logo --->
-		<a href="#" class="logo"><img width="150" src="<?php echo site_url('/img/logo.png')?>" alt="Smart Taxi"> </a>
+		<a href="#" class="logo"><img width="150"
+			src="<?php echo site_url('/img/logo.png')?>" alt="Smart Taxi"> </a>
 		<!--- / Logo --->
 
 		<!--- Location --->
 		<a class="location" href="#">Toronto</a>
 		<!--- / Location --->
 
-		
+
 	</div>
 
 	</section> <!--- / Black Bar ---> </header>
@@ -437,54 +436,63 @@
 
 
 
-		
-		<div>
-			<ul class="nav main">
-				<li class="ic-gallery dd"><a
-					href="<?php echo site_url('admin/users/view') ?>"><span>Users</span>
-				</a></li>
-				<li class="ic-gallery dd"><a
-					href="<?php echo site_url('admin/driver_information/view') ?>"><span>Driver</span>
-				</a></li>
-				<li class="ic-gallery dd"><a
-					href="<?php echo site_url('admin/corporate/view') ?>"><span>Corporate</span>
-				</a></li>
-				<li class="ic-gallery dd"><a href="#"><span>Reports</span> </a>
-					<ul>
-						<li><a
-							href="<?php echo site_url('admin/report/select_customer') ?>"><span>Customer</span>
-						</a></li>
-						<li><a
-							href="<?php echo site_url('admin/report/select_corporate') ?>"><span>Corporate</span>
-						</a></li>
-						<li><a href="<?php echo site_url('admin/report/select_driver') ?>"><span>Driver</span>
-						</a></li>
 
-					</ul>
-				</li>
-				<li class="ic-gallery dd"><a
-					href="<?php echo site_url('admin/check_in_stands/view') ?>"><span>Stands</span>
-				</a></li>
-				<li class="ic-gallery dd"><a
-					href="<?php echo site_url('admin/cab_provider/view') ?>"><span>Cab
-							Provider</span> </a></li>
-				<li class="ic-gallery dd"><a
-					href="<?php echo site_url('admin/cabs/view') ?>"><span>Cab</span> </a>
-					<ul>
-						<li><a href="<?php echo site_url('admin/cabs/assign') ?>"><span>Assign</span>
-						</a></li>
-					</ul>
-				</li>
+	<div>
+		<ul class="nav main">
+			<li class="ic-gallery dd"><a
+				href="<?php echo site_url('admin/users/view') ?>"><span>Users</span>
+			</a></li>
+			<li class="ic-gallery dd"><a
+				href="<?php echo site_url('admin/driver_information/view') ?>"><span>Driver</span>
+			</a>
 
-			</ul>
-		</div>
-		
-		<div class="clear"></div>	
-			
- 				<div class="maincont"><?php echo $content; ?></div>		
-		
+				<ul>
+					<li><a href="<?php echo site_url('admin/cabs/assign') ?>"><span>Assign</span>
+					</a></li>
+				</ul></li>
+			<li class="ic-gallery dd"><a
+				href="<?php echo site_url('admin/corporate/view') ?>"><span>Corporate</span>
+			</a></li>
+			<li class="ic-gallery dd"><a href="#"><span>Reports</span> </a>
+				<ul>
+					<li><a
+						href="<?php echo site_url('admin/report/select_customer') ?>"><span>Customer</span>
+					</a></li>
+					<li><a
+						href="<?php echo site_url('admin/report/select_corporate') ?>"><span>Corporate</span>
+					</a></li>
+					<li><a href="<?php echo site_url('admin/report/select_driver') ?>"><span>Driver</span>
+					</a>
+					</li>
 
-	
+				</ul>
+			</li>
+			<li class="ic-gallery dd"><a
+				href="<?php echo site_url('admin/check_in_stands/view') ?>"><span>Stands</span>
+			</a></li>
+			<li class="ic-gallery dd"><a
+				href="<?php echo site_url('admin/cab_provider/view') ?>"><span>Cab
+						Provider</span> </a></li>
+			<li class="ic-gallery dd"><a
+				href="<?php echo site_url('admin/cabs/view') ?>"><span>Cab</span> </a>
+
+			</li>
+			<li class="ic-gallery dd"><a
+				href="<?php echo site_url('admin/journey_type/view') ?>"><span>Journey
+						Type</span> </a>
+			</li>
+
+		</ul>
+	</div>
+
+	<div class="clear"></div>
+
+	<div class="maincont">
+		<?php echo $content; ?>
+	</div>
+
+
+
 	<div class="clear"></div>
 
 	<!--- ====== Footer ====== --->

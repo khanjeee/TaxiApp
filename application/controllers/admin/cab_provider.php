@@ -69,7 +69,7 @@ class Cab_provider extends CI_Controller {
 			$crud->set_subject('Cab Providers');
 			$crud->required_fields('name','price','description','seats_avalaible','child_seats_available','luggage_capacity','dispatcher_id','image_url','is_corporate');
 			
-			$crud->columns('name','price','description','seats_avalaible','child_seats_available','luggage_capacity','dispatcher_id','image_url','is_corporate');
+			$crud->columns('name','price','description','seats_avalaible','child_seats_available','luggage_capacity','is_corporate');
 			$crud->fields('name','price','description','seats_avalaible','child_seats_available','luggage_capacity','dispatcher_id','image_url','is_corporate');
 			//$crud->edit_fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password');
 			$crud->set_field_upload('image_url',UPLOAD_CAB_PROVIDER_IMAGE);
@@ -79,7 +79,7 @@ class Cab_provider extends CI_Controller {
 			
 			$crud->callback_add_field('dispatcher_id',array($this->dispatcher,'get_dispatcher_dropdown'));
 			$crud->callback_edit_field('dispatcher_id',array($this->dispatcher,'get_dispatcher_dropdown'));
-			$crud->callback_column('dispatcher_id',array($this->dispatcher,'get_dispatcher_by_id'));
+			//$crud->callback_column('dispatcher_id',array($this->dispatcher,'get_dispatcher_by_id'));
 			$crud->set_rules('child_seats_available','child seats available','required|numeric');
 			$crud->set_rules('seats_avalaible','seats available','required|numeric');
 			$crud->set_rules('luggage_capacity','luggage capacity','required|numeric');

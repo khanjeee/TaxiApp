@@ -41,6 +41,29 @@ Corporate :
 
 <div class="form-field-box odd" >
 <div class="form-display-as-box" >
+Employee ID :
+</div>
+				<div class="form-input-box" id="year_input_box">
+				<input name="employee_id"  type="text" style="width:140px" >	
+				</div>
+				<div class="clear"></div>	
+</div>
+
+<div class="form-field-box odd" >
+<div class="form-display-as-box" >
+Journey Type :
+</div>
+				<div class="form-input-box" id="year_input_box">
+				<?php echo $journey_type; ?>
+				<span> (OR) File Number: </span>	
+				<input name="file_number"  type="text" style="width:140px" >	
+				</div>
+				<div class="clear"></div>	
+</div>
+
+
+<div class="form-field-box odd" >
+<div class="form-display-as-box" >
 From :
 </div>
 				<div class="form-input-box" id="year_input_box">

@@ -24,6 +24,9 @@ class Report extends CI_Controller {
 		$this->load->helper('common_helper');
 		$this->load->library('session');
 		$this->load->model('Corporate_Model','corporate');
+		$this->load->model('Journey_type_Model','journey_type');
+		
+		
 
 		$session_data=$this->session->all_userdata();
 		if(isset($session_data['group_id']) ){
@@ -59,7 +62,9 @@ class Report extends CI_Controller {
 	{
 		$status=$this->session->flashdata('status');
 		$corporate=$this->corporate->get_corporate_dropdown(1);
-		$content = $this->load->view('admin/select_corporate.php',	array('corporate' => $corporate),true);
+		$journey_type=$this->journey_type->get_journey_type_dropdown(0);
+		$content = $this->load->view('admin/select_corporate.php',	array('corporate' => $corporate,'journey_type'=>$journey_type),true);
+		
 		$this->load->view('admin/master', array('content' => $content));
 	}
 

@@ -68,11 +68,9 @@ class Journey_type extends CI_Controller {
 			$crud->set_subject('Journey type');
 			$crud->required_fields('journey_type');
 			
-			$crud->columns('journey_type','corporate_id');
-			$crud->fields('journey_type','corporate_id');
+			$crud->columns('corporate_id','journey_type');
+			$crud->fields('corporate_id','journey_type');
 			
-			$crud->field_type('journey_type','dropdown',
-					array('Business Trip' => 'Business Trip', 'Personal Trip' => 'Personal Trip','Official Trip' => 'Official Trip' ));
 			
 			$crud->unset_print();
 			$crud->unset_export();
