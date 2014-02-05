@@ -25,6 +25,7 @@ class Report extends CI_Controller {
 		$this->load->library('session');
 		$this->load->model('Corporate_Model','corporate');
 		$this->load->model('Journey_type_Model','journey_type');
+		$this->load->model('Cab_provider_Model','cab_provider');
 		
 		
 
@@ -72,8 +73,8 @@ class Report extends CI_Controller {
 	{
 		$status=$this->session->flashdata('status');
 		$drivers=$this->drivers->get_driver_dropdown(1);
-		$corporate=$this->corporate->get_corporate_dropdown(1);
-		$content = $this->load->view('admin/select_driver.php',	array('drivers' => $drivers,'corporate' => $corporate),true);
+		$cab_provider=$this->cab_provider->get_cab_provider_dropdown(1);
+		$content = $this->load->view('admin/select_driver.php',	array('drivers' => $drivers,'cab_provider' => $cab_provider),true);
 		$this->load->view('admin/master', array('content' => $content));
 	}
 
@@ -104,11 +105,14 @@ class Report extends CI_Controller {
 			$crud->unset_delete();
 			$crud->unset_edit();
 			
-			$crud->columns('first_name','payment_type','pickup_door_address','pickup_time','dropOff_door_address','dropOff_time','amount','driver_name','tip_given');
+			//$crud->columns('first_name','payment_type','pickup_door_address','pickup_time','dropOff_door_address','dropOff_time','amount','driver_name','tip_given');
+			$crud->columns('first_name','employee_id','driver_name','pickup_door_address','dropOff_door_address','journey_type','amount','tip_given','extra_amount');
+				
 			$crud->callback_column('amount',array($this,'calculate_total_amount'));
 
 			$crud->display_as('first_name','Customer Name');
 			$crud->display_as('amount','Trip Fare');
+			$crud->display_as('extra_amount','Airport Tax');
 			$crud->callback_column('tip_given',array($this,'tip_given'));
 				
 			
@@ -188,13 +192,14 @@ class Report extends CI_Controller {
 			$crud->unset_delete();
 			$crud->unset_edit();
 
-			$crud->columns('driver_name','first_name','payment_type','pickup_door_address','pickup_time','dropOff_door_address','dropOff_time','amount','tip_given','smart_taxi_earning');
+			$crud->columns('driver_name','first_name','pickup_door_address','dropOff_door_address','journey_type','amount','tip_given','smart_taxi_earning','driver_earning','extra_amount');
 			$crud->display_as('first_name','Customer Name');
 			$crud->display_as('amount','Trip Fare');
+			$crud->display_as('extra_amount','Airport Tax');
 			$crud->callback_column('amount',array($this,'calculate_total_amount'));
 			$crud->callback_column('tip_given',array($this,'tip_given'));
 			$crud->callback_column('smart_taxi_earning',array($this,'calculate_smart_taxi_earning'));
-				
+			$crud->callback_column('driver_earning',array($this,'calculate_driver_earning'));
 			
 			$output = $crud->render();
 			$output->payment_count=$this->payment_count;	//passing payment count tot he view
@@ -213,6 +218,14 @@ class Report extends CI_Controller {
 		}
 	}
 
+	
+	function calculate_driver_earning($value,$row){//if checked checkbox is posted else hidden field
+	
+		$amount=floatval(str_replace('$', '', $row->amount));
+		$smart_taxi_earning=floatval(str_replace('$', '', $row->smart_taxi_earning));
+		$tip_given=floatval(str_replace('$', '', $row->tip_given));
+		return CURRENCY_UNIT.(($amount-$smart_taxi_earning)+$tip_given); //(total amount-sttax earning)+tip
+	}
 	function calculate_total_amount($value,$id){//if checked checkbox is posted else hidden field
 
 		$this->payment_count+=$value;

@@ -119,7 +119,7 @@ $(document).ready(function () {
 
 							}        	          	 
     	            	var opt = $('<option />'); // here we're creating a new select option with for each teacher
-    	               	opt.val(this.id);
+    	               	opt.val(this.journey_type);
     	                opt.text(this.journey_type);
     					$('#journey_type_dd').append(opt);
     	            	// console.log(this.id+'='+this.name);

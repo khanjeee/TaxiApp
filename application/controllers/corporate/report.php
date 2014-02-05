@@ -99,7 +99,9 @@ class Report extends CI_Controller {
 			$crud->unset_delete();
 			$crud->unset_edit();
 
-			$crud->columns('created','time','first_name','payment_type','pickup_door_address','pickup_time','amount','driver_name','tip_given');
+			//$crud->columns('created','time','first_name','payment_type','pickup_door_address','pickup_time','amount','driver_name','tip_given');
+			$crud->columns('first_name','employee_id','driver_name','pickup_door_address','dropOff_door_address','journey_type','amount','tip_given','extra_amount');
+				
 			$crud->callback_column('amount',array($this,'append_currency'));
 			$crud->callback_column('tip_given',array($this,'tip_given'));
 			$crud->callback_column('created',array($this,'created'));
@@ -144,8 +146,9 @@ class Report extends CI_Controller {
 			$crud->unset_delete();
 			$crud->unset_edit();
 
-			$crud->columns('created','time','first_name','payment_type','pickup_door_address','pickup_time','amount','driver_name','tip_given');
-
+			//$crud->columns('created','time','first_name','pickup_door_address','amount','driver_name','tip_given');
+			$crud->columns('first_name','employee_id','driver_name','pickup_door_address','dropOff_door_address','journey_type','amount','tip_given','extra_amount');
+				
 			$crud->callback_column('amount',array($this,'append_currency'));
 			$crud->callback_column('tip_given',array($this,'tip_given'));
 			$crud->callback_column('created',array($this,'created'));
@@ -225,6 +228,11 @@ class Report extends CI_Controller {
 	}
 	function tip_given($value,$row){//if checked checkbox is posted else hidden field
 	
+		$row->first_name=$row->first_name.' '.$row->last_name;
+		$row->pickup_door_address=$row->pickup_door_address."<br>".$row->pickup_time; //concatenatng 2 field here to save time
+		$row->dropOff_door_address=$row->dropOff_door_address."<br>".$row->dropOff_time;
+		$row->extra_amount=(empty($row->extra_amount)) ? "NO" : "YES" ;
+		
 		return CURRENCY_UNIT.$value;
 	}
 	

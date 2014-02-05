@@ -481,6 +481,10 @@
 				href="<?php echo site_url('admin/journey_type/view') ?>"><span>Journey
 						Type</span> </a>
 			</li>
+			<li class="ic-gallery dd"><a
+				href="<?php echo site_url('admin/departments/view') ?>"><span>Department
+						</span> </a>
+			</li>
 
 		</ul>
 	</div>
