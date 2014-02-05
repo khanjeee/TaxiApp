@@ -55,7 +55,6 @@ class Corporate_report extends grocery_CRUD_Model
    	$this->db->where('payment.created <=',$end_date.' 23:59:59'); //23:59:59 appended to select items till the end of day
    }
    if(!empty($journey_type)){
-  // 	die($journey_type);
    	$this->db->where('journey_users.journey_type =',$journey_type); //matching journey type from journey_users table
    }
    if(!empty($employee_id)){

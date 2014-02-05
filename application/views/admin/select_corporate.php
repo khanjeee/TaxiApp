@@ -93,12 +93,68 @@ To :
 </div>
 </form>
 <script type="text/javascript">
+$(document).ready(function () {
+
+	var corporate_id= $('#corporate_id').val();
+    ajaxcall(corporate_id);
+$('#corporate_id').change(function(){ //any select change on the dropdown with id country trigger this code         
+    var corporate_id= $('#corporate_id').val();
+    ajaxcall(corporate_id);
+}); 
+
+    function submit(){
+    	$("#user_form").submit();	
+
+    }
 
 
-function submit(){
-	$("#user_form").submit();	
+    function ajaxcall(corporate_id){
+    	  $.ajax({
+    	        type: "POST",
+    	        url: "<?php echo site_url('admin/users/get_journey_types_by_corporate_json'); ?>/"+corporate_id, //here we are calling our user controller and get_cities method with the country_id
+    	         
+    	        success: function(json) //we're calling the response json array 
+    	        {  
+    	            //alert(json);
+    	        	if(json.length>0){ 
+    	            obj = JSON.parse(json); //converting string to json obj
+    	        	$("#journey_type_dd > option").remove();
+    	          	 $.each(obj, function(index, value) {
 
-}
+						if(index==0){
+							var opt = $('<option />'); // here we're creating a new select option with for each teacher
+	    	               	opt.val("0");
+	    	                opt.text("Select");
+	    					$('#journey_type_dd').append(opt);
+
+							}        	          	 
+    	            	var opt = $('<option />'); // here we're creating a new select option with for each teacher
+    	               	opt.val(this.journey_type);
+    	                opt.text(this.journey_type);
+    					$('#journey_type_dd').append(opt);
+    	            	// console.log(this.id+'='+this.name);
+    	            	 
+    	            	});
+    	        	}
+    	        	else {
+    	        		$("#journey_type_dd > option").remove();
+    	        		var opt = $('<option />'); 
+    	               	opt.val('0');
+    	                opt.text('Select');
+    					$('#journey_type_dd').append(opt);
+    	            	}
+
+
+    	        }
+    	         
+    	    });
+    }
+
+    });
+
+    
+
+
 </script>
 
 

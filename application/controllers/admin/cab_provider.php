@@ -67,7 +67,7 @@ class Cab_provider extends CI_Controller {
 			$crud->set_theme('datatables');
 			$crud->set_table('cab_provider');
 			$crud->set_subject('Cab Providers');
-			$crud->required_fields('name','price','description','seats_avalaible','child_seats_available','luggage_capacity','dispatcher_id','image_url','is_corporate');
+			$crud->required_fields('name','price','description','seats_avalaible','child_seats_available','luggage_capacity','dispatcher_id','is_corporate');
 			
 			$crud->columns('name','price','description','seats_avalaible','child_seats_available','luggage_capacity','is_corporate');
 			$crud->fields('name','price','description','seats_avalaible','child_seats_available','luggage_capacity','dispatcher_id','image_url','is_corporate');

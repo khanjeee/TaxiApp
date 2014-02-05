@@ -110,7 +110,10 @@ class Users_Model  extends CI_Model  {
     {
     	 
     	$this->db->select('id,first_name');
-    	$query=$this->db->get_where('users', array('corporate_id' => $corporate_id));
+    	$this->db->or_where('corporate_id =',$corporate_id);
+    	$this->db->where('group_id =',5);
+    	$this->db->or_where('group_id =',4);
+    	$query=$this->db->get('users');
     	$result=$query->result();
     
     	if(!empty($result)){

@@ -447,8 +447,11 @@
                   
                     
                 </ul>
+                
             
             </li>
+            <li ><a href="<?php echo site_url('corporate/users/view') ?>"><span>Users</span></a></li>                  
+            
 		</ul>
 	</div>
 

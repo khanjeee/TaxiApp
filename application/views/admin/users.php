@@ -14,7 +14,7 @@ foreach($css_files as $file): ?>
 <script>
 var group_id= $("#group_id").val();
 
-if(group_id==5){ //display corporates if corporate selected
+if(group_id==5 || group_id==7){ //display corporates if corporate selected
 	$("#corporate_id_field_box").show();
 	$("#department_id_field_box").show();
 	$("#cab_provider_field_box").hide();
@@ -40,7 +40,7 @@ else{
 $("#group_id").change(function(){         
     var group_id= $("#group_id").val();
    
-    if(group_id==5){ //display corporates if corporate selected
+    if(group_id==5 || group_id==7){ //display corporates if corporate selected
     	$("#corporate_id_field_box").show();
     	$("#department_id_field_box").show();
     	$("#employee_id_field_box").show();

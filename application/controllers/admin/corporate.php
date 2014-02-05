@@ -60,7 +60,7 @@ class Corporate extends CI_Controller {
 			$crud->set_theme('datatables');
 			$crud->set_table('corporate');
 			$crud->set_subject('Corporate Info');
-			$crud->required_fields('name','license_no','email','phone_no','address');
+			$crud->required_fields('name','email','phone_no','address');
 			
 			$crud->unset_print();
 			$crud->unset_export();

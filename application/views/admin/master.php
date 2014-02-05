@@ -420,7 +420,7 @@
 
 	<div class="container">
 		<!--- Logo --->
-		<a href="#" class="logo"><img width="150"
+		<a href="<?php echo site_url('admin/dashboard') ?>" class="logo"><img width="150"
 			src="<?php echo site_url('/img/logo.png')?>" alt="Smart Taxi"> </a>
 		<!--- / Logo --->
 

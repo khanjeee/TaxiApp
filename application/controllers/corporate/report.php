@@ -22,10 +22,11 @@ class Report extends CI_Controller {
 		$this->load->helper('common_helper');
 		$this->load->library('session');
 		$this->load->model('Corporate_Model','corporate');
+		$this->load->model('Journey_type_Model','journey_type');
 
 		$session_data=$this->session->all_userdata();
 		if(isset($session_data['group_id']) ){
-			if($session_data['group_id']!=5) {
+			if($session_data['group_id']!=7) {
 				$this->session->set_flashdata('message', 'You must be an admin to view this page');
 				ci_redirect('admin/login','refresh');
 			}
@@ -47,9 +48,8 @@ class Report extends CI_Controller {
 	{
 		$session_data=$this->session->all_userdata();
 		$status=$this->session->flashdata('status');
-		$corporate_id=$this->users->get_corporate_id($session_data['id']);
-		$users=$this->users->get_users_by_corporate_dropdown($corporate_id);
-		$content = $this->load->view('corporate/select_customer.php',	array('users' => $users,'corporate_id' => $corporate_id),true);
+		$users=$this->users->get_users_by_corporate_dropdown($session_data['corporate_id']);
+		$content = $this->load->view('corporate/select_customer.php',	array('users' => $users,'corporate_id' => $session_data['corporate_id']),true);
 		$this->load->view('corporate/master', array('content' => $content));
 	}
 
@@ -58,8 +58,8 @@ class Report extends CI_Controller {
 	{
 		$session_data=$this->session->all_userdata();
 		$status=$this->session->flashdata('status');
-		$corporate_id=$this->users->get_corporate_id($session_data['id']);
-		$content = $this->load->view('corporate/select_corporate.php',	array('corporate_id' => $corporate_id),true);
+		$journey_type=$this->journey_type->get_journey_type_dropdown($session_data['corporate_id']);
+		$content = $this->load->view('corporate/select_corporate.php',	array('corporate_id' => $session_data['corporate_id'],'journey_type'=>$journey_type),true);
 		$this->load->view('corporate/master', array('content' => $content));
 	}
 

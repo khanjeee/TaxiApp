@@ -19,7 +19,7 @@ $(function()
 <div class="mDiv">
 		<div class="ftitle">
 			<div class="ftitle-left">
-				Select time  to generate a corporate's report </div>			
+				Select Corporate to generate Report	</div>			
 			<div class="clear"></div>
 		</div>
 		
@@ -28,7 +28,30 @@ $(function()
 
 <div id="main-table-box">
 <div class="form-div">
-<input type="hidden" name="corporate_id" value="<?php echo $corporate_id; ?>" />
+
+<input type="hidden" name="corporate_id" value="<?php echo $corporate_id; ?>">
+
+<div class="form-field-box odd" >
+<div class="form-display-as-box" >
+Employee ID :
+</div>
+				<div class="form-input-box" id="year_input_box">
+				<input name="employee_id"  type="text" style="width:140px" >	
+				</div>
+				<div class="clear"></div>	
+</div>
+
+<div class="form-field-box odd" >
+<div class="form-display-as-box" >
+Journey Type :
+</div>
+				<div class="form-input-box" id="year_input_box">
+				<?php echo $journey_type; ?>
+				<span> (OR) File Number: </span>	
+				<input name="file_number"  type="text" style="width:140px" >	
+				</div>
+				<div class="clear"></div>	
+</div>
 
 
 <div class="form-field-box odd" >
@@ -51,16 +74,6 @@ To :
 				<div class="clear"></div>	
 </div>
 
-<div class="form-field-box odd" >
-<div class="form-display-as-box" >
-Employee ID :
-</div>
-				<div class="form-input-box" id="year_input_box">
-				<input name="employee_id"  type="text" style="width:140px" >	
-				</div>
-				<div class="clear"></div>	
-</div>
-
 </div>
 <div class="pDiv">	
       <div class="form-button-box">
@@ -72,12 +85,64 @@ Employee ID :
 </div>
 </form>
 <script type="text/javascript">
+$(document).ready(function () {
+
+	var corporate_id= <?php echo $corporate_id; ?>;
+	
+    ajaxcall(corporate_id);
 
 
-function submit(){
-	$("#user_form").submit();	
+    function submit(){
+    	$("#user_form").submit();	
 
-}
+    }
+
+
+    function ajaxcall(corporate_id){
+    	  $.ajax({
+    	        type: "POST",
+    	        url: "<?php echo site_url('corporate/users/get_journey_types_by_corporate_json'); ?>/"+corporate_id, //here we are calling our user controller and get_cities method with the country_id
+    	         
+    	        success: function(json) //we're calling the response json array 
+    	        {  
+    	           // alert(json);
+    	        	if(json.length>0){ 
+    	            obj = JSON.parse(json); //converting string to json obj
+    	        	$("#journey_type_dd > option").remove();
+    	          	 $.each(obj, function(index, value) {
+
+						if(index==0){
+							var opt = $('<option />'); // here we're creating a new select option with for each teacher
+	    	               	opt.val("0");
+	    	                opt.text("Select");
+	    					$('#journey_type_dd').append(opt);
+
+							}        	          	 
+    	            	var opt = $('<option />'); // here we're creating a new select option with for each teacher
+    	               	opt.val(this.id);
+    	                opt.text(this.journey_type);
+    					$('#journey_type_dd').append(opt);
+    	            	// console.log(this.id+'='+this.name);
+    	            	 
+    	            	});
+    	        	}
+    	        	else {
+    	        		$("#journey_type_dd > option").remove();
+    	        		var opt = $('<option />'); 
+    	               	opt.val('0');
+    	                opt.text('Select');
+    					$('#journey_type_dd').append(opt);
+    	            	}
+
+
+    	        }
+    	         
+    	    });
+    }
+
+    });
+
+    
 </script>
 
 

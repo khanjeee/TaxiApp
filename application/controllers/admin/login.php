@@ -43,7 +43,7 @@ class Login extends CI_Controller {
 					ci_redirect('admin/dashboard');  // send to admin page 
 				}
 				
-			elseif ($json_data['body']['User']['group_id']==5){// set session if group id is 5 and redirect to corporate
+			elseif ($json_data['body']['User']['group_id']==7){// set session if group id is 5 and redirect to corporate
 						
 					$this->session->set_userdata($json_data['body']['User']); //set data in session
 					ci_redirect('corporate/dashboard');  // send to admin page
