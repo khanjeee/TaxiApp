@@ -83,6 +83,19 @@ class Driver_Model  extends CI_Model  {
     	}
     }
     
+    function get_user_id_by_cab_provider_id($cab_provider_id)
+    {
+    
+    	$this->db->select('user_id,name');
+    	$query = $this->db->get_where('driver_information', array('cab_provider_id' => $cab_provider_id));
+    	$result=$query->result();
+    
+    	if(!empty($result)){
+    		return json_encode($result);
+    		 
+    	}
+    }
+    
     //first param is the value to be updated and second is the id of the field to be updated
     function update_driver_name($value,$row_id)
     {
@@ -135,6 +148,13 @@ class Driver_Model  extends CI_Model  {
     	if(!empty($result)){
     		return $result[0]->cab_provider_id;
     	}
+    }
+    
+    function update_cab_id($cab_id){
+    	
+    	$data = array('cab_id' => null);
+    	$this->db->where('cab_id', $cab_id);
+    	$this->db->update('driver_information',$data);
     }
     
 

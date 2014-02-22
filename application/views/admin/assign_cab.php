@@ -96,7 +96,7 @@ function ajaxcall_driver(cab_provider_id){
 	
 	  $.ajax({
 	        type: "POST",
-	        url: "<?php echo site_url('admin/driver_information/get_driver_by_cab_provider_id'); ?>/"+cab_provider_id, //here we are calling our user controller and get_cities method with the country_id
+	        url: "<?php echo site_url('admin/driver_information/get_user_id_by_cab_provider_id'); ?>/"+cab_provider_id, //here we are calling our user controller and get_cities method with the country_id
 	         
 	        success: function(json) //we're calling the response json array 
 	        {  
@@ -106,7 +106,7 @@ function ajaxcall_driver(cab_provider_id){
 	        	$("#user_id > option").remove();
 	          	 $.each(obj, function() {
 	            	var opt = $('<option />'); // here we're creating a new select option with for each teacher
-	               	opt.val(this.id);
+	               	opt.val(this.user_id);
 	                opt.text(this.name);
 					$('#user_id').append(opt);
 	            	// console.log(this.id+'='+this.name);

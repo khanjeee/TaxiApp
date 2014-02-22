@@ -42,7 +42,7 @@ class Users_Model  extends CI_Model  {
     		 
     		$arrUsers[$data->id]=$data->first_name;
     	}
-    
+    	
     	return form_dropdown('user_id', $arrUsers,$value,'id="user_id"');
     }
     

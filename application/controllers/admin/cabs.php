@@ -73,6 +73,9 @@ class Cabs extends CI_Controller {
 			
 			$this->db->where('id', $_POST['cab_id']);
 			$this->db->update('cabs', array('driver_assigned' => 'yes'));
+			//updating driver information 
+			$this->db->where('user_id', $_POST['user_id']);
+			$this->db->update('driver_information', array('cab_id' =>  $_POST['cab_id']));
 			
 			$this->session->set_flashdata('message', 'Cab successfully assigned to driver.');
 			ci_redirect('admin/cabs/assign','refresh');

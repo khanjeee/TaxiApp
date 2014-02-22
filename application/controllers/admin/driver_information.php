@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Driver_information extends CI_Controller {
-
+	
 	function __construct()
 	{   
 		
@@ -50,6 +50,7 @@ class Driver_information extends CI_Controller {
 	function view()
 	{		
 		try{
+			
 			$crud = new grocery_CRUD();
 
 			$crud->set_theme('datatables');
@@ -71,9 +72,12 @@ class Driver_information extends CI_Controller {
 			$crud->callback_add_field('dispatcher_id',array($this->dispatcher,'get_dispatcher_dropdown'));
 			$crud->callback_add_field('cab_provider_id',array($this,'cab_provider'));
 			
+			
+			
 			//$crud->callback_column('first_name',array($this,'get_first_name'));
 			$crud->callback_edit_field('first_name',array($this,'first_name_edit'));
 			$crud->callback_edit_field('last_name',array($this,'last_name_edit'));
+			$crud->callback_edit_field('cab_id',array($this,'get_cab_no_by_cab_provider_id_dropdown'));
 				
 			
 			$crud->callback_column('first_name',array($this,'get_first_name'));
@@ -129,13 +133,18 @@ class Driver_information extends CI_Controller {
 	}
 	
 	function get_cab_provider_dropdown_edit($value,$row){
-	
+		
 		return 	$this->cab_provider->get_cab_provider_dropdown($value,null);
 	}
 
 	function call_before_update($post_array){
-		//$this->pr($post_array); die;
-		
+		$session=$this->session->all_userdata();
+		if($post_array['cab_id']!=	$session['cab_id']){ // means cab  changed in edit
+			//update the cab_id if already assignet to a driver because its been given to a new driver
+			$this->driver->update_cab_id($post_array['cab_id']);
+			
+		}
+		$this->session->unset_userdata('cab_id');
 		//update first last name in users 
 		// takes fisrt_name,last_name  and id as third param
 		$this->users->update_first_last_name($post_array['first_name'],$post_array['last_name'],$post_array['user_id']); 
@@ -146,9 +155,22 @@ class Driver_information extends CI_Controller {
 		return $post_array;
 	}
 	
+	function get_cab_no_by_cab_provider_id_dropdown($value,$id){
+		  //saving cab_id to check on edit whether its changed or not 
+		$this->session->set_userdata('cab_id', $value);
+		return $this->cab->get_cab_no_by_cab_provider_id_dropdown($value,$id);
+	}
+	
 	function get_driver_by_cab_provider_id($cab_provider_id=''){
 	
 		echo $this->driver->get_driver_by_cab_provider_id($cab_provider_id);
 	}
+	function get_user_id_by_cab_provider_id($cab_provider_id=''){
+	
+		echo $this->driver->get_user_id_by_cab_provider_id($cab_provider_id);
+	}
+	
+	
+	
 	
 }
