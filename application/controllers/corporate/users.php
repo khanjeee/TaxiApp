@@ -15,6 +15,8 @@ class Users extends CI_Controller {
 		$this->load->helper('form');
 		$this->load->library('grocery_CRUD');
 		$this->load->helper('common_helper');
+		$this->load->library('email');
+		
 		$this->load->model('Groups_Model','groups');
 		$this->load->model('Corporate_Model','corporate');
 		$this->load->model('Users_Model','users');
@@ -73,9 +75,9 @@ class Users extends CI_Controller {
 			$crud->set_table('users');
 			$crud->where('corporate_id',$session_data['corporate_id']);
 			$crud->set_subject('Users Info');
-			$crud->required_fields('first_name','last_name','username','gender','phone','status','password');
+			$crud->required_fields('first_name','last_name','username','gender','phone','status','password','employee_id');
 			
-			$crud->columns('first_name','last_name','username','gender','phone','user_image','group_id','status');
+			$crud->columns('first_name','last_name','username','gender','phone','user_image','group_id','status','employee_id','message');
 			$crud->fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password','corporate_id','department_id','employee_id');
 			//$crud->edit_fields('first_name','last_name','username','gender','phone','user_image','group_id','status','password');
 			$crud->set_field_upload('user_image',UPLOAD_USER_IMAGE);
@@ -83,14 +85,18 @@ class Users extends CI_Controller {
 			$crud->field_type('corporate_id', 'hidden');
 			$crud->field_type('group_id', 'hidden');
 			
+			//$crud->add_action('Message', '', '','ui-icon-image',array($this,'just_a_test'));
+			
 			$crud->unset_print();
 			$crud->unset_export();
 			$crud->set_rules('username', 'Username', 'callback_check_duplicate');
 				
 			/*@todo check username for duplicates and fix lisence no on update*/
 			
+			$crud->callback_column('message',array($this,'email_user'));
 			$crud->callback_column('group_id',array($this->groups,'get_group_by_id'));
 			$crud->callback_edit_field('password',array($this,'save_password_copy'));
+			$crud->callback_column('employee_id',array($this,'generate_qr'));
 					
 			$crud->callback_field('cab_provider',array($this,'get_cab_provider_dropdown')); //dummy @kmdc
 			$crud->callback_field('department_id',array($this->department,'get_department_dropdown'));
@@ -147,6 +153,13 @@ class Users extends CI_Controller {
 	 	return "<input type='password' maxlength='255' value={$value} name='password' id='field-password'><input type='hidden' name='password_copy' value={$value}>";
 	}
 	
+	function generate_qr($value, $row){
+		$img=site_url('/assets/img/qr.png');
+		$qr_url="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=id-{$row->id}&choe=UTF-8";
+		return "<a href={$qr_url} download='{$row->first_name}_{$row->last_name}'><img width='50' height='50' src={$img}></a>";
+	}
+	
+	
 	
 	
 	function get_corporate_users($value='') {
@@ -185,6 +198,46 @@ class Users extends CI_Controller {
 		echo $this->journey_type->get_journey_types_by_corporate_json($corporate_id);
 	}
 	
+	function email_user($primary_key , $row)
+	{
+		$qr_url="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=id-{$row->id}&choe=UTF-8";
+		$email=$row->username;
+		$first_name=$row->first_name;
+		$last_name=$row->last_name;
+		$str = <<<EOD
+<a onclick="javascript:send_email('$email','$first_name','$last_name','$qr_url');" href="javascript:void(0)" class="edit_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
+							<span class="ui-button-icon-primary ui-icon  M75115bd4"></span><span class="ui-button-text">&nbsp;Message</span>
+						</a>
+EOD;
+		return $str;
+	}
+	
+	function email_user_info(){
+		
+		$email=$_POST['email'];
+		$data=array('email'=>$email,
+					'qr_url'=>$_POST['qr_url'],
+					'first_name'=>$_POST['first_name'],
+					'last_name'=>$_POST['last_name']);
+		
+		$this->email->initialize(array(
+				'mailtype' => 'html',
+				'validate' => TRUE,
+		));
+		
+		$mail_content = $this->load->view('email/template_user.php',$data,TRUE);
+		$this->email->from('noreply@smarttaxi.com', 'SmartTaxi Admin');
+		$this->email->to($email);
+		$this->email->subject('Smart Taxi-User Details');
+		$this->email->message($mail_content);
+		if ($this->email->send()) {
+			echo "email successfully sent to user {$email}";
+		}else{
+			echo($this->email->print_debugger()); //Display errors if any
+		}
+		
+		
+	}
 	
 
 	
