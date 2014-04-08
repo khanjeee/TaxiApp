@@ -4,11 +4,14 @@ class Corporate_report extends grocery_CRUD_Model
 //The function get_list is just a copy-paste from grocery_CRUD_Model
 	function get_list()
 	{
-		$corporate_id=(isset($_POST['corporate_id']))? $_POST['corporate_id'] : -1;	
+		
+		$corporate_id=(isset($_POST['corporate_id']))? intval($_POST['corporate_id']) : -1;	
 		$start_date=(isset($_POST['start_date']))? $_POST['start_date'] : NULL;	
 		$end_date=(isset($_POST['end_date']))? $_POST['end_date'] : NULL;	
 		$employee_id=(isset($_POST['employee_id']))? $_POST['employee_id'] : NULL;	
+		if(isset($_POST['journey_type'])){
 		$journey_type=($_POST['journey_type']=="0")?  NULL : $_POST['journey_type'] ;
+		}
 		$file_number=(isset($_POST['file_number']))? $_POST['file_number'] : NULL;
 		
 		if(!empty($file_number)){
@@ -18,7 +21,7 @@ class Corporate_report extends grocery_CRUD_Model
 	 if($this->table_name === null)
 	  return false;
 	
-	 $select = "{$this->table_name}.*,payment.*,journey_users.*,driver_information.name as 'driver_name'";
+	 $select = "{$this->table_name}.*,payment.*,journey_users.*,driver_information.name as 'driver_name',cab_provider.name as 'taxi_company_name'";
 	
   // ADD YOUR SELECT FROM JOIN HERE, for example: <------------------------------------------------------
   // $select .= ", user_log.created_date, user_log.update_date";
@@ -47,7 +50,9 @@ class Corporate_report extends grocery_CRUD_Model
    $this->db->join('journey_users','journey_users.journey_id = payment.journey_id');
    $this->db->join('journeys','journeys.id = journey_users.journey_id');
    $this->db->join('driver_information','driver_information.cab_id = journeys.cab_id');
+   $this->db->join('cab_provider','driver_information.cab_provider_id = cab_provider.id');
    $this->db->where('users.corporate_id',$corporate_id);
+   $this->db->where('journeys.notification_status','complete');
    if(!empty($start_date)){
    $this->db->where('payment.created >=',$start_date.' 00:00:00'); //00:00:00 appended to select items from start of day
    }
@@ -60,7 +65,7 @@ class Corporate_report extends grocery_CRUD_Model
    if(!empty($employee_id)){
    	$this->db->where('users.employee_id =',$employee_id); //filtering  corpote users by employee _id
    }
-   $this->db->order_by("pickup_time", "desc");
+   $this->db->order_by("journey_users.pickup_time", "desc");
     
 	 $results = $this->db->get($this->table_name)->result();
 	

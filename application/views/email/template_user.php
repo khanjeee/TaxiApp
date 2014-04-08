@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title></title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=320, target-densitydpi=device-dpi">
 <style type="text/css">
 /* Mobile-specific Styles */
@@ -105,167 +106,78 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
 		<td align="center" bgcolor="#c7c7c7">
         	<table class="w640" style="margin:0 10px;" width="640" cellpadding="0" cellspacing="0" border="0">
             	<tbody><tr><td class="w640" width="640" height="20"></td></tr>
-                
-            	<tr>
-                	<td class="w640" width="640">
-                        <table id="top-bar" class="w640" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000">
-    <tbody><tr>
-        <td class="w15" width="15"></td>
-        <td class="w325" width="350" valign="middle" align="left">
-            <table class="w325" width="350" cellpadding="0" cellspacing="0" border="0">
-                <tbody><tr><td class="w325" width="350" height="8"></td></tr>
-            </tbody></table>
-            <div class="header-content"><webversion>Web Version</webversion><span class="hide">&nbsp;&nbsp;|&nbsp; <preferences lang="en">Update preferences</preferences>&nbsp;&nbsp;|&nbsp; <unsubscribe>Unsubscribe</unsubscribe></span></div>
-            <table class="w325" width="350" cellpadding="0" cellspacing="0" border="0">
-                <tbody><tr><td class="w325" width="350" height="8"></td></tr>
-            </tbody></table>
-        </td>
-        <td class="w30" width="30"></td>
-        <td class="w255" width="255" valign="middle" align="right">
-            <table class="w255" width="255" cellpadding="0" cellspacing="0" border="0">
-                <tbody><tr><td class="w255" width="255" height="8"></td></tr>
-            </tbody></table>
-            <table cellpadding="0" cellspacing="0" border="0">
-    <tbody><tr>
-        
-        
-        
-    </tr>
-</tbody></table>
-            <table class="w255" width="255" cellpadding="0" cellspacing="0" border="0">
-                <tbody><tr><td class="w255" width="255" height="8"></td></tr>
-            </tbody></table>
-        </td>
-        <td class="w15" width="15"></td>
-    </tr>
-</tbody></table>
-                        
-                    </td>
-                </tr>
-                <tr>
-                <td id="header" class="w640" width="640" align="center" bgcolor="#000000">
-    
-    <table class="w640" width="640" cellpadding="0" cellspacing="0" border="0">
-        <tbody><tr><td class="w30" width="30"></td><td class="w580" width="580" height="30"></td><td class="w30" width="30"></td></tr>
-        <tr>
-            <td class="w30" width="30"></td>
-            <td class="w580" width="580">
-                <div align="center" id="headline">
-                    <p>
-                        <strong><singleline label="Title">ABC Widgets</singleline></strong>
-                    </p>
-                </div>
-            </td>
-            <td class="w30" width="30"></td>
-        </tr>
-    </tbody></table>
-    
-    
-</td>
-                </tr>
-                
-                <tr><td class="w640" width="640" height="30" bgcolor="#ffffff"></td></tr>
                 <tr id="simple-content-row"><td class="w640" width="640" bgcolor="#ffffff">
-    <table class="w640" width="640" cellpadding="0" cellspacing="0" border="0">
-        <tbody><tr>
-            <td class="w30" width="30"></td>
-            <td class="w580" width="580">
-                <repeater>
-                    
-                    <layout label="Text only">
-                        <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
-                            <tbody><tr>
+                  <table class="w640" width="640" cellpadding="0" cellspacing="0" border="0">
+                    <tbody><tr>
+                      <td class="w30" width="30"></td>
+                      <td class="w580" width="580">
+                        <repeater>
+                          
+                          <layout label="Text only">
+                            <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
+                              <tbody><tr>
                                 <td class="w580" width="580">
-                                    <p align="left" class="article-title"><singleline label="Title">Smart Taxi</singleline></p>
-                                    <div align="left" class="article-content">
-                                        <multiline label="Description">Enter your description</multiline>
+                                  <p align="left" class="article-title"><singleline label="Title">Smart Taxi</singleline></p>
+                                  <div align="left" class="article-content">
+                                    <multiline label="Description"><em>Hello <strong><?php echo $first_name." ".$last_name; ?>,</strong></em></multiline>
                                     </div>
-                                </td>
-                            </tr>
-                            <tr><td class="w580" width="580" height="10"></td></tr>
-                        </tbody></table>
-                    </layout>
-                                        
-                    
-                    <layout label="Text with full-width image">
-                        <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
-                            <tbody><tr>
-                                <td class="w580" width="580">
-                                    <p align="left" class="article-title"><singleline label="Title"><?php echo $first_name." ".$last_name; ?></singleline></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="w580" width="580"><img editable="true" label="Image" class="w580" width="580" border="0"></td>
-                            </tr>
-                            <tr><td class="w580" width="580" height="15"></td></tr>
-                            <tr>
-                                <td class="w580" width="580">
+                                  </td>
+                                </tr>
+                                <tr><td class="w580" width="580" height="10"></td></tr>
+                            </tbody></table>
+                          </layout>
+                          
+                          
+                          <layout label="Text with full-width image">
+                            <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
+                                <tbody><tr>
+                                <tr><td class="w580" width="580">
                                     <div align="left" class="article-content">
-                                        <p align="left" class="article-title"><singleline label="Title">Click Image to Download</singleline></p>
-                                        <a href="<?php echo $qr_url; ?>" download="<?php echo $first_name."_".$last_name; ?>">
-                                        <img width="50" height="50" src="<?php echo $qr_url; ?>"></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr><td class="w580" width="580" height="10"></td></tr>
-                        </tbody></table>
-                    </layout>
+                                      <p>Attached in this email is your requested unique barcode to be used as your ID when you request a trip with 						our partner taxi operators. Please save it in a secure place. In case of loss or stolen, report to us immediatly.
                                         
-                    
-                    <layout label="Text with right-aligned image">
-                        <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
-                            <tbody><tr>
-                                <td class="w580" width="580">
-                                    <p align="left" class="article-title"><singleline label="Title">Add a title</singleline></p>
-                                    <table cellpadding="0" cellspacing="0" border="0" align="right">
-                                        <tbody><tr>
-                                            <td class="w30" width="15"></td>
-                                            <td><img editable="true" label="Image" class="w300" width="300" border="0"></td>
-                                        </tr>
-                                        <tr><td class="w30" width="15" height="5"></td><td></td></tr>
-                                    </tbody></table>
+                                        Enjoy your travelling and stay safe.</p>
+                                    </div>
+                                    
+                                  </td></tr>
+                                  <tr>
+                                  <td class="w580" width="580">
                                     <div align="left" class="article-content">
-                                        <multiline label="Description">Enter your description</multiline>
+                                      <p align="left" class="article-title">
+                                        <singleline >Click Image to Download</singleline>
+                                      </p>
+                                      <a href="<?php echo $qr_url; ?>" download="<?php echo $first_name."_".$last_name; ?>">
+                                      <img width="50" height="50" src="<?php echo $qr_url; ?>"></a>
                                     </div>
-                                </td>
-                            </tr>
-                            <tr><td class="w580" width="580" height="10"></td></tr>
-                        </tbody></table>
-                    </layout>
-                                        
-                    
-                    <layout label="Text with left-aligned image">
-                        <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
-                            <tbody><tr>
-                                <td class="w580" width="580">
-                                    <p align="left" class="article-title"><singleline label="Title">Add a title</singleline></p>
-                                    <table cellpadding="0" cellspacing="0" border="0" align="left">
-                                        <tbody><tr>
-                                            <td><img editable="true" label="Image" class="w300" width="300" border="0"></td>
-                                            <td class="w30" width="15"></td>
-                                        </tr>
-                                        <tr><td></td><td class="w30" width="15" height="5"></td></tr>
-                                    </tbody></table>
                                     <div align="left" class="article-content">
-                                        <multiline label="Description">Enter your description</multiline>
+                                    Regards,
                                     </div>
-                                </td>
-                            </tr>
-                            <tr><td class="w580" width="580" height="10"></td></tr>
-                        </tbody></table>
-                    </layout>
-                                                                                
-                    
-                    
-                                        
-                                        
-                    
-                    
-                </repeater>
-            </td>
-            <td class="w30" width="30"></td>
-        </tr>
-    </tbody></table>
+                                    <strong> <?php echo $corporate; ?></strong>
+                                    </p>
+
+
+                                    </p>
+                                  </td>
+                                </tr>
+                            </tbody></table>
+                          </layout>
+                          
+                          
+                          
+                          
+                          
+                        
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                        </repeater>
+                      </td>
+                      <td class="w30" width="30"></td>
+                      </tr>
+                  </tbody></table>
 </td></tr>
                 <tr><td class="w640" width="640" height="15" bgcolor="#ffffff"></td></tr>
                 
@@ -279,3 +191,4 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
         </td>
 	</tr>
 </tbody></table></body></html>
+

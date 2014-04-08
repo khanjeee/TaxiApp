@@ -204,8 +204,9 @@ class Users extends CI_Controller {
 		$email=$row->username;
 		$first_name=$row->first_name;
 		$last_name=$row->last_name;
+		$corporate=$this->corporate->get_corporate_name_by_id($row->corporate_id);
 		$str = <<<EOD
-<a onclick="javascript:send_email('$email','$first_name','$last_name','$qr_url');" href="javascript:void(0)" class="edit_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
+<a onclick="javascript:send_email('$email','$first_name','$last_name','$qr_url','$corporate');" href="javascript:void(0)" class="edit_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
 							<span class="ui-button-icon-primary ui-icon  M75115bd4"></span><span class="ui-button-text">&nbsp;Message</span>
 						</a>
 EOD;
@@ -218,7 +219,8 @@ EOD;
 		$data=array('email'=>$email,
 					'qr_url'=>$_POST['qr_url'],
 					'first_name'=>$_POST['first_name'],
-					'last_name'=>$_POST['last_name']);
+					'last_name'=>$_POST['last_name'],
+					'corporate'=>$_POST['corporate']);
 		
 		$this->email->initialize(array(
 				'mailtype' => 'html',

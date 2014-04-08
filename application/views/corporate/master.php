@@ -442,8 +442,8 @@
            
             <li class="ic-gallery dd"><a href="#"><span>Reports</span></a>
             	<ul>
-                    <li ><a href="<?php echo site_url('corporate/report/select_customer') ?>"><span>Customer</span></a></li>
-                    <li ><a href="<?php echo site_url('corporate/report/select_corporate') ?>"><span>Corporate</span></a></li>
+                    <li ><a href="<?php echo site_url('corporate/report/select_customer') ?>"><span>Individual employees</span></a></li>
+                    <li ><a href="<?php echo site_url('corporate/report/select_corporate') ?>"><span>Advanced search</span></a></li>
                   
                     
                 </ul>

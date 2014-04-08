@@ -11,7 +11,7 @@ class Customer_report extends grocery_CRUD_Model
 	 if($this->table_name === null)
 	  return false;
 	
-	 $select = "{$this->table_name}.*,payment.*,journey_users.*,driver_information.name as 'driver_name'";
+	 $select = "{$this->table_name}.*,payment.*,journey_users.*,driver_information.name as 'driver_name',cab_provider.name as 'taxi_company_name'";
 	
   // ADD YOUR SELECT FROM JOIN HERE, for example: <------------------------------------------------------
   // $select .= ", user_log.created_date, user_log.update_date";
@@ -40,14 +40,17 @@ class Customer_report extends grocery_CRUD_Model
    $this->db->join('journey_users','journey_users.journey_id = payment.journey_id');
    $this->db->join('journeys','journeys.id = journey_users.journey_id');
    $this->db->join('driver_information','driver_information.cab_id = journeys.cab_id');
+   $this->db->join('cab_provider','driver_information.cab_provider_id = cab_provider.id');
    $this->db->where('payment.customer_id',$user_id);
+   $this->db->where('journeys.notification_status','complete');
+   
    if(!empty($start_date)){
    $this->db->where('payment.created >=',$start_date.' 00:00:00'); //00:00:00 appended to select items from start of day
    }   
    if(!empty($end_date)){
    	$this->db->where('payment.created <=',$end_date.' 23:59:59'); //23:59:59 appended to select items till the end of day
    }
-   $this->db->order_by("pickup_time", "desc");
+   $this->db->order_by("journey_users.pickup_time", "desc");
     
 	 $results = $this->db->get($this->table_name)->result();
 	

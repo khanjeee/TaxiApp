@@ -1,3 +1,13 @@
+<?php if (!empty($_POST)) { ?>
+<div class="DataTables_sort_wrapper">
+<h2>
+<strong>Search Criteria</strong><br>      
+Customer= <?php echo empty($_POST['user'])? "Any" : $_POST['user']; ?> ,
+Start Date= <?php echo empty($_POST['start_date'])? "Any" : $_POST['start_date']; ?> ,
+End Date= <?php echo empty($_POST['end_date'])? "Any" : $_POST['end_date']; ?> 
+</h2>
+</div>
+<?php }  ?>
 <?php
 foreach($css_files as $file): ?>
 <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />

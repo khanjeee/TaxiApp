@@ -56,13 +56,14 @@ To :
 				<div class="form-input-box" id="year_input_box">
 				<input name="end_date" id="date"  type="text" class="datepicker datepicker-input hasDatepicker" readonly="true" >	
 				</div>
-				<div class="clear"></div>	
+				<div class="clear"></div>
+				<input id="user_name" type="hidden" value="" name="user">	
 </div>
 
 </div>
 <div class="pDiv">	
       <div class="form-button-box">
-				<input type="submit" value="Submit" class="btn btn-large" onclick="submit();">
+				<input type="submit" value="Submit" class="btn btn-large" >
 	 </div>
 </div> 
 
@@ -72,12 +73,12 @@ To :
 <script type="text/javascript">
 $(document).ready(function () {
 
+$("#user_form").submit(function(){
+	var user=$("#user_id option:selected" ).text();
+	$("#user_name").val(user);	
+	
+});	
 
-
-function submit(){
-	$("#user_form").submit();	
-
-}
 
 
 });
